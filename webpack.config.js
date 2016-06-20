@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: ['./assets/js/app.js'],
+  entry: ['./assets/javascripts/app.js'],
   output: {
     path: './public/javascripts',
     filename: 'app.js',
@@ -25,6 +25,9 @@ module.exports = {
       }]
   },
   plugins: [
+    new webpack.EnvironmentPlugin([
+      "NODE_ENV"
+    ]),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",

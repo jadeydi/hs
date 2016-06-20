@@ -4,8 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var models = require('./models');
 
-var routes = require('./routes/index');
+var apiAccount = require('./routes/api/account');
 
 var app = express();
 
@@ -18,10 +19,35 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser("4acb7538c19ab5c897798456c3ca642c"));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use(function(req, res, next) {
+  if (req.headers.accept == 'application/vnd.cksity.com+json') {
+    token = req.cookies._cksixty_com
+    if(token != undefined) {
+      models.users.findOne({where: {authenticationToken: token}}).then(function(user) {
+        req.current_user = user;
+        next();
+      }).catch(function(error) {
+        res.status(500).json({});
+      })
+    } else {
+      next();
+    }
+  } else {
+    if (req.method == "GET") {
+      res.render('index', { title: 'Express' });
+    } else {
+      var err = new Error('Not Found');
+      err.status = 404;
+      next(err);
+    }
+  }
+});
+
+// api routes
+app.use('/', apiAccount);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
