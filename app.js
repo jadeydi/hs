@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var models = require('./models');
 
-var apiAccount = require('./routes/api/account');
+var account = require('./routes/api/account');
+var facts = require('./routes/api/facts');
 
 var app = express();
 
@@ -39,15 +40,14 @@ app.use(function(req, res, next) {
     if (req.method == "GET") {
       res.render('index', { title: 'Express' });
     } else {
-      var err = new Error('Not Found');
-      err.status = 404;
-      next(err);
+      res.redirect("/")
     }
   }
 });
 
 // api routes
-app.use('/', apiAccount);
+app.use('/', account);
+app.use('/', facts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

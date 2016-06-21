@@ -35,6 +35,13 @@ const FactForm = React.createClass({
   handleDescription: function(e) {
     this.setState({description: e.target.value});
   },
+
+  handleSubmit: function(e) {
+    e.preventDefault();
+    this.serverRequest = client('/facts', 'POST', {description: this.state.description}).done(function(result) {
+      console.info(result);
+    }.bind(this));
+  },
 });
 
 module.exports = {factForm: FactForm}
