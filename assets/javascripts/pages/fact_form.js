@@ -1,8 +1,20 @@
 import React from 'react';
+import client from '../client';
 
 const FactForm = React.createClass({
   getInitialState: function() {
     return {description: ''}
+  },
+
+  componentDidMount: function() {
+    $('.js-fact-form').hide();
+    this.serverRequest = client('/account').done(function(result) {
+      $('.js-fact-form').show();
+    });
+  },
+
+  componentWillUnmount: function() {
+    this.serverRequest.abort();
   },
 
   render() {
