@@ -2,7 +2,6 @@ import '../stylesheets/app.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router'
-import User from './pages/users';
 import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
@@ -23,9 +22,6 @@ const Home = React.createClass({
     return (
       <div>
         <div>Hello Home</div>
-        <div>
-          <Link to='/users'> Users </Link>
-        </div>
         <div>
           <Link to='/account/sign_in'> Sign In </Link>
         </div>
@@ -54,9 +50,7 @@ $(function() {
   ReactDOM.render(
     <Router history={browserHistory}>
       <Route component={Layout}>
-        <Route path="/" components={{main: Home}}>
-          <Route path="users" component={User.users} />
-        </Route>
+        <Route path="/" components={{main: Home}} />
         <Route path="/account/sign_in" components={{main: SignIn.signIn}} />
         <Route path="/account/sign_up" components={{main: SignUp.signUp}} />
         <Route path="/facts/new" components={{main: FactForm.factForm}} />
