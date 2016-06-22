@@ -6,6 +6,7 @@ import User from './pages/users';
 import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
+import Fact from './pages/fact';
 
 var Layout = React.createClass({
   render: function() {
@@ -59,6 +60,7 @@ $(function() {
         <Route path="/account/sign_in" components={{main: SignIn.signIn}} />
         <Route path="/account/sign_up" components={{main: SignUp.signUp}} />
         <Route path="/facts/new" components={{main: FactForm.factForm}} />
+        <Route path="/facts/:id" components={{main: Fact.fact}} />
       </Route>
       <Route path="*" component={NotFound} />
     </Router>,

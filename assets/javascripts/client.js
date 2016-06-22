@@ -7,7 +7,17 @@ module.exports = function(url, method, data) {
 
   var method = method || "GET";
   var data = data || {}
-  return $.ajax({url: url, method: method, data: data}).fail(function() {
-    browserHistory.push('/account/sign_in');
+  return $.ajax({
+    url: url
+    , method: method
+    , data: data
+    , statusCode: {
+      404: function() {
+        browserHistory.push('/404');
+      }
+      , 401: function() {
+        browserHistory.push('/account/sign_in');
+      },
+    }
   });
 };

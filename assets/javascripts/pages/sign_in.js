@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 const SignIn = React.createClass({
   getInitialState: function() {
@@ -32,7 +33,7 @@ const SignIn = React.createClass({
       headers: { 'Accept': 'application/vnd.cksity.com+json' }
     });
     this.serverRequest = $.post('/session', {identity: identity, password: password}, function(result) {
-      console.info(result);
+      browserHistory.push('/');
     }.bind(this));
   },
 

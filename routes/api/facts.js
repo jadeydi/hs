@@ -16,4 +16,17 @@ router.post('/facts', function(req, res) {
   }
 });
 
+router.get('/facts/:id', function(req, res) {
+  models.facts.findById(req.params.id).then(function(fact) {
+    if (fact == null) {
+      res.status(404).json({});
+    } else {
+      res.json({id: fact.id, description: fact.description, created_at: fact.created_at})
+    }
+  })
+  .catch(function(error) {
+    res.status(500).json({});
+  });
+});
+
 module.exports = router;
