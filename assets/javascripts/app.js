@@ -6,6 +6,7 @@ import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
 import Fact from './pages/fact';
+import Auth from './auth';
 
 var Layout = React.createClass({
   render: function() {
@@ -44,16 +45,23 @@ const NotFound = React.createClass({
   }
 });
 
-$(function() {
-  $('.title').css('color', 'red');
+function requireAuth(nextState, replace) {
+  if (!Auth.loggedIn()) {
+    replace({
+      pathname: '/account/sign_in',
+      state: { nextPathname: nextState.location.pathname }
+    });
+  }
+};
 
+$(function() {
   ReactDOM.render(
     <Router history={browserHistory}>
       <Route component={Layout}>
         <Route path="/" components={{main: Home}} />
         <Route path="/account/sign_in" components={{main: SignIn.signIn}} />
         <Route path="/account/sign_up" components={{main: SignUp.signUp}} />
-        <Route path="/facts/new" components={{main: FactForm.factForm}} />
+        <Route path="/facts/new" onEnter={requireAuth} components={{main: FactForm.factForm}} />
         <Route path="/facts/:id" components={{main: Fact.fact}} />
       </Route>
       <Route path="*" component={NotFound} />
