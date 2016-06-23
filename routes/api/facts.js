@@ -7,8 +7,8 @@ router.post('/facts', function(req, res) {
     res.status(401).json({});
   } else {
     var body = req.body;
-    models.facts.create({description: body.description, userId: req.current_user.id}).then(function(fact) {
-      res.json({id: fact.id, description: fact.description, user_id: req.current_user.id});
+    req.current_user.createFact({description: body.description, userId: req.current_user.id}).then(function(fact) {
+      res.json({id: fact.id, description: fact.description, user_id: fact.user_id});
     })
     .catch(function(error) {
       res.status(500).json({});

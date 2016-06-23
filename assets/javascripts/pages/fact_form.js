@@ -1,20 +1,10 @@
 import React from 'react';
 import client from '../client';
+import { browserHistory } from 'react-router';
 
 const FactForm = React.createClass({
   getInitialState: function() {
     return {description: ''}
-  },
-
-  componentDidMount: function() {
-    $('.js-fact-form').hide();
-    this.serverRequest = client('/account').done(function(result) {
-      $('.js-fact-form').show();
-    });
-  },
-
-  componentWillUnmount: function() {
-    this.serverRequest.abort();
   },
 
   render() {
@@ -39,7 +29,7 @@ const FactForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     this.serverRequest = client('/facts', 'POST', {description: this.state.description}).done(function(result) {
-      console.info(result);
+      browserHistory.push('/facts/'+result.id);
     }.bind(this));
   },
 });
