@@ -12,6 +12,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
+      hero: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -32,6 +36,7 @@ module.exports = {
     })
     .then(() => {
       queryInterface.addIndex("facts", ["user_id"], {});
+      queryInterface.addIndex("facts", ["hero"], {});
     });
   },
   down: function(queryInterface, Sequelize) {
