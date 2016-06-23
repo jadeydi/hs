@@ -8,6 +8,7 @@ var models = require('./models');
 
 var account = require('./routes/api/account');
 var facts = require('./routes/api/facts');
+var home = require('./routes/api/home');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use(function(req, res, next) {
 });
 
 // api routes
+app.use('/', home);
 app.use('/', account);
 app.use('/', facts);
 

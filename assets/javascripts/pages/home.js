@@ -2,13 +2,13 @@ import React from 'react';
 import client from '../client';
 import variables from '!json!../../../config/variables';
 
-const Fact = React.createClass({
+const Home = React.createClass({
   getInitialState: function() {
     return {id: '', description: '', hero: '', created_at: ''}
   },
 
   componentDidMount: function() {
-    this.serverRequest = client('/facts/' + this.props.params.id).done(function(result) {
+    this.serverRequest = client('/').done(function(result) {
       this.setState(result);
     }.bind(this));
   },
@@ -37,4 +37,4 @@ const Fact = React.createClass({
   }
 });
 
-module.exports = {fact: Fact}
+module.exports = {home: Home}

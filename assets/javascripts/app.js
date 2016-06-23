@@ -6,6 +6,7 @@ import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
 import Fact from './pages/fact';
+import Home from './pages/home';
 import Auth from './auth';
 
 var Layout = React.createClass({
@@ -15,25 +16,6 @@ var Layout = React.createClass({
         {this.props.main}
       </div>
     );
-  }
-});
-
-const Home = React.createClass({
-  render() {
-    return (
-      <div>
-        <div>Hello Home</div>
-        <div>
-          <Link to='/account/sign_in'> Sign In </Link>
-        </div>
-        <div>
-          <Link to='/account/sign_up'> Sign Up </Link>
-        </div>
-        <div className="detail">
-          {this.props.children}
-        </div>
-      </div>
-    )
   }
 });
 
@@ -58,7 +40,7 @@ $(function() {
   ReactDOM.render(
     <Router history={browserHistory}>
       <Route component={Layout}>
-        <Route path="/" components={{main: Home}} />
+        <Route path="/" components={{main: Home.home}} />
         <Route path="/account/sign_in" components={{main: SignIn.signIn}} />
         <Route path="/account/sign_up" components={{main: SignUp.signUp}} />
         <Route path="/facts/new" onEnter={requireAuth} components={{main: FactForm.factForm}} />
