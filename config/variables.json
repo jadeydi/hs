@@ -1,3 +1,14 @@
 {
-  "heroes": ["mage", "hunter", "paladin", "warrior", "druid", "rogue" , "warlock", "shaman", "priest"]
+  "heroes": {
+    "mage": "法师",
+    "hunter": "猎人",
+    "paladin": "圣骑士",
+    "warrior": "战士",
+    "druid": "德鲁伊",
+    "rogue": "潜行者" ,
+    "warlock": "术士",
+    "shaman": "萨满",
+    "priest": "牧师",
+    "neutral": "中立"
+  }
 }

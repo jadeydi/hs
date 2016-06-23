@@ -1,10 +1,11 @@
 import React from 'react';
 import client from '../client';
+import variables from '!json!../../../config/variables';
 
 
 const Fact = React.createClass({
   getInitialState: function() {
-    return {id: '', description: '', created_at: ''}
+    return {id: '', description: '', hero: '', created_at: ''}
   },
 
   componentDidMount: function() {
@@ -25,6 +26,9 @@ const Fact = React.createClass({
         </div>
         <div>
           description: {this.state.description}
+        </div>
+        <div>
+          hero: {variables.heroes[this.state.hero]}
         </div>
         <div>
           created_at: {this.state.created_at}

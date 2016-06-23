@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       hero: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       user_id: {

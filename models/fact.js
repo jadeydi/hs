@@ -11,9 +11,8 @@ module.exports = function(sequelize, DataTypes) {
     hero: {
       type: DataTypes.STRING,
       validate: {
-        isIn: [variables.heroes],
+        isIn: [Object.keys(variables.heroes)],
       },
-      allowNull: true
     },
     userId: {
       type: DataTypes.INTEGER
