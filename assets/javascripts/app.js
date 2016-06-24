@@ -44,6 +44,7 @@ $(function() {
         <Route path="/account/sign_in" components={{main: SignIn.signIn}} />
         <Route path="/account/sign_up" components={{main: SignUp.signUp}} />
         <Route path="/facts/new" onEnter={requireAuth} components={{main: FactForm.factForm}} />
+        <Route path="/facts/:id/edit" onEnter={requireAuth} components={{main: FactForm.factForm}} />
         <Route path="/facts/:id" components={{main: Fact.fact}} />
       </Route>
       <Route path="*" component={NotFound} />

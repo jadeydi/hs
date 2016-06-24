@@ -7,7 +7,7 @@ router.post('/facts', function(req, res) {
     res.status(401).json({});
   } else {
     var body = req.body;
-    req.current_user.createFact({description: body.description, hero: body.hero, userId: req.current_user.id}).then(function(fact) {
+    req.current_user.createFact({description: body.description, hero: body.hero}).then(function(fact) {
       res.json({id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at});
     })
     .catch(function(error) {
@@ -18,6 +18,31 @@ router.post('/facts', function(req, res) {
       }
     });
   }
+});
+
+router.patch('/facts/:id', function(req, res) {
+  models.facts.findOne({where: {id: req.params.id, userId: req.current_user.id}}).then(function(fact) {
+    if (fact == null) {
+      res.status(404).json({});
+    } else {
+      var body = req.body;
+      fact.description = body.description
+      fact.hero = body.hero
+      fact.save().then(function(fact) {
+        res.json({id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at});
+      })
+      .catch(function(error) {
+        if (error.name == 'SequelizeValidationError') {
+          res.status(406).json({});
+        } else {
+          res.status(500).json({});
+        }
+      });
+    }
+  })
+  .catch(function(error) {
+    res.status(500).json({});
+  });
 });
 
 router.get('/facts/:id', function(req, res) {
