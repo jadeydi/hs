@@ -1,7 +1,7 @@
 import '../stylesheets/app.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, browserHistory } from 'react-router'
+import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
 import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
@@ -13,7 +13,7 @@ var Layout = React.createClass({
   render: function() {
     return (
       <div className="container">
-        {this.props.main}
+        { this.props.children }
       </div>
     );
   }
@@ -39,13 +39,13 @@ function requireAuth(nextState, replace) {
 $(function() {
   ReactDOM.render(
     <Router history={browserHistory}>
-      <Route component={Layout}>
-        <Route path="/" components={{main: Home.home}} />
-        <Route path="/account/sign_in" components={{main: SignIn.signIn}} />
-        <Route path="/account/sign_up" components={{main: SignUp.signUp}} />
-        <Route path="/facts/new" onEnter={requireAuth} components={{main: FactForm.factForm}} />
-        <Route path="/facts/:id/edit" onEnter={requireAuth} components={{main: FactForm.factForm}} />
-        <Route path="/facts/:id" components={{main: Fact.fact}} />
+      <Route path= '/' component={Layout}>
+        <IndexRoute component={Home.home} />
+        <Route path="account/sign_in" component={SignIn.signIn} />
+        <Route path="account/sign_up" component={SignUp.signUp} />
+        <Route path="facts/new" onEnter={requireAuth} component={FactForm.factForm} />
+        <Route path="facts/:id/edit" onEnter={requireAuth} component={FactForm.factForm} />
+        <Route path="facts/:id" component={Fact.fact} />
       </Route>
       <Route path="*" component={NotFound} />
     </Router>,

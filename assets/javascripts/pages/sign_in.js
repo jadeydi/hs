@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Auth from '../auth';
-import Client from '../client';
+import client from '../client';
 
 const SignIn = withRouter (
   React.createClass({
@@ -33,7 +33,7 @@ const SignIn = withRouter (
       var {location} = this.props;
       var identity = this.state.identity.trim();
       var password = this.state.password.trim();
-      this.serverRequest = Client('/session', 'POST', {identity: identity, password: password}).done(function(result) {
+      this.serverRequest = client('/session', 'POST', {identity: identity, password: password}).done(function(result) {
         Auth.login(result);
         if (location.state && location.state.nextPathname) {
           this.props.router.replace(location.state.nextPathname)

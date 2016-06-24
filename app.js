@@ -47,9 +47,9 @@ app.use(function(req, res, next) {
 });
 
 // api routes
-app.use('/', home);
-app.use('/', account);
-app.use('/', facts);
+app.use('/api', home);
+app.use('/api', account);
+app.use('/api', facts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
