@@ -46,6 +46,29 @@ app.use(function(req, res, next) {
   }
 });
 
+var whiteList = [
+  ["GET", "^/api/$"],
+  ["POST", "^/api/session$"],
+  ["POST", "^/api/account$"],
+  ["GET", "^/api/facts/[0-9]{1,24}$"],
+  ["GET", "^/api/facts/[0-9]{1,24}/prev$"],
+  ["GET", "^/api/facts/[0-9]{1,24}/next$"],
+]
+
+function authenticate(req) {
+  return whiteList.some(function(item) {
+    return item[0] == req.method && (new RegExp(item[1])).test(req.path)
+  });
+}
+
+app.use(function(req, res, next) {
+  if (req.current_user != undefined || authenticate(req)) {
+    next();
+  } else {
+    res.status(401).json({})
+  }
+});
+
 // api routes
 app.use('/api', home);
 app.use('/api', account);

@@ -3,21 +3,17 @@ var router = express.Router();
 var models = require('../../models');
 
 router.post('/facts', function(req, res) {
-  if (req.current_user == undefined) {
-    res.status(401).json({});
-  } else {
-    var body = req.body;
-    req.current_user.createFact({description: body.description, hero: body.hero}).then(function(fact) {
-      res.json({id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at});
-    })
-    .catch(function(error) {
-      if (error.name == 'SequelizeValidationError') {
-        res.status(406).json({});
-      } else {
-        res.status(500).json({});
-      }
-    });
-  }
+  var body = req.body;
+  req.current_user.createFact({description: body.description, hero: body.hero}).then(function(fact) {
+    res.json({id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at});
+  })
+  .catch(function(error) {
+    if (error.name == 'SequelizeValidationError') {
+      res.status(406).json({});
+    } else {
+      res.status(500).json({});
+    }
+  });
 });
 
 router.patch('/facts/:id', function(req, res) {
