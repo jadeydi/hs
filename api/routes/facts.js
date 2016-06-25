@@ -54,4 +54,20 @@ router.get('/facts/:id', function(req, res) {
   });
 });
 
+router.get('/facts/:id/prev', function(req, res) {
+  models.facts.find({where: {id: {$lt: req.params.id}}}).then(function(facts) {
+  })
+  .catch(function(error) {
+    res.status(500).json({});
+  });
+});
+
+router.get('/facts/:id/next', function(req, res) {
+  models.facts.find({where: {id: {$gt: req.params.id}}}).then(function(facts) {
+  })
+  .catch(function(error) {
+    res.status(500).json({});
+  });
+});
+
 module.exports = router;
