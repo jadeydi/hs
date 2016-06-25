@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../../models');
+var factView = require('../views/fact');
 
 router.post('/facts', function(req, res) {
   var body = req.body;
   req.current_user.createFact({description: body.description, hero: body.hero}).then(function(fact) {
-    res.json({id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at});
+    res.json(factView.renderFact(fact));
   })
   .catch(function(error) {
     if (error.name == 'SequelizeValidationError') {
@@ -25,7 +26,7 @@ router.patch('/facts/:id', function(req, res) {
       fact.description = body.description
       fact.hero = body.hero
       fact.save().then(function(fact) {
-        res.json({id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at});
+        res.json(factView.renderFact(fact));
       })
       .catch(function(error) {
         if (error.name == 'SequelizeValidationError') {
@@ -46,7 +47,7 @@ router.get('/facts/:id', function(req, res) {
     if (fact == null) {
       res.status(404).json({});
     } else {
-      res.json({id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at})
+      res.json(factView.renderFact(fact));
     }
   })
   .catch(function(error) {
