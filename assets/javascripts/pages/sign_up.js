@@ -11,20 +11,19 @@ const SignUp = withRouter (
 
     render() {
       return (
-        <div>
-          <h1> Sign Up </h1>
-          <form onSubmit={this.handleSubmit}>
+        <div className='account sign_up'>
+          <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
-              <input type='email' name='email' placeholder='EMAIL' onChange={this.handleEmail} />
+              <input className='pure-input-1' type='email' name='email' placeholder='EMAIL' onChange={this.handleEmail} />
             </div>
             <div>
-              <input type='text' name='username' min='5' placeholder='USERNAME' onChange={this.handleUsername} />
+              <input className='pure-input-1' type='text' name='username' min='5' placeholder='USERNAME' onChange={this.handleUsername} />
             </div>
             <div>
-              <input type='password' name='password' min='6' placeholder='PASSWORD' onChange={this.handlePassword} />
+              <input className='pure-input-1' type='password' name='password' min='6' placeholder='PASSWORD' onChange={this.handlePassword} />
             </div>
             <div>
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Submit" className="pure-button pure-input-1 pure-button-primary" />
             </div>
           </form>
         </div>

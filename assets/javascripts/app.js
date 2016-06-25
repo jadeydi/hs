@@ -1,4 +1,5 @@
 import '../stylesheets/app.scss';
+import 'purecss/build/pure-min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'

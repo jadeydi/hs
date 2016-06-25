@@ -1,0 +1,16 @@
+@mixin position() {
+  width: 18rem;
+  max-width: 98%;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+.account {
+  &.sign_in {
+    @include position();
+  }
+
+  &.sign_up {
+    @include position();
+  }
+}

@@ -24,23 +24,23 @@ const FactForm = withRouter (
 
     render() {
       return (
-        <div className='js-fact-form'>
-          <form onSubmit={this.handleSubmit}>
+        <div className='fact form'>
+          <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
-              <textarea placeholder='DESCRIPTION' value={this.state.description} onChange={this.handleDescription} />
+              <textarea className='pure-input-1 desc' placeholder='DESCRIPTION' value={this.state.description} onChange={this.handleDescription} />
             </div>
             <div>
-              <select onChange={this.handleHero} value={this.state.hero}>
+              <select className='pure-input-1' onChange={this.handleHero} value={this.state.hero}>
                 {Object.keys(variables.heroes).map(function(key) {
                   return <option value={key}>{variables.heroes[key]}</option>
-                  })}
-                </select>
-              </div>
-              <div>
-                <input type="submit" value="Submit" />
-              </div>
-            </form>
-          </div>
+                })}
+              </select>
+            </div>
+            <div>
+              <input type="submit" value="Submit" className='pure-input-1 pure-button pure-button-primary' />
+            </div>
+          </form>
+        </div>
       )
     },
 
