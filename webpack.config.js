@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: ['./assets/javascripts/app.js'],
+  entry: './assets/javascripts/app.js',
   output: {
     path: './public/javascripts',
     filename: 'app.js',
@@ -14,16 +14,13 @@ module.exports = {
       query: {
         presets: ['react', 'es2015']
       }
-    },
-    {
+    }, {
       test: /\.css$/,
       loader: "style-loader!css-loader"
-    },
-    {
+    }, {
       test: /\.scss$/,
       loader: 'style-loader!css-loader!sass-loader',
-    },
-    {
+    }, {
       test: /\.json$/,
       loader: 'json-loader',
     }]

@@ -44,10 +44,28 @@ router.patch('/facts/:id', function(req, res) {
 
 router.get('/facts/:id', function(req, res) {
   models.facts.findById(req.params.id).then(function(fact) {
+    var obj = {}
     if (fact == null) {
       res.status(404).json({});
     } else {
-      res.json(factView.renderFact(fact));
+      obj.current = factView.renderFact(fact);
+      models.facts.find({where: {id: {$lt: fact.id}}, order: 'id DESC'}).then(function(prev) {
+        if (prev != null) {
+          obj.prev = factView.renderFact(prev);
+        }
+        models.facts.find({where: {id: {$gt: fact.id}}}).then(function(next) {
+          if (next != null) {
+            obj.next = factView.renderFact(next);
+          }
+          res.json(obj);
+        })
+        .catch(function(error) {
+          res.status(500).json({});
+        });
+      })
+      .catch(function(error) {
+        res.status(500).json({});
+      });
     }
   })
   .catch(function(error) {
@@ -56,7 +74,8 @@ router.get('/facts/:id', function(req, res) {
 });
 
 router.get('/facts/:id/prev', function(req, res) {
-  models.facts.find({where: {id: {$lt: req.params.id}}}).then(function(facts) {
+  models.facts.findAll({where: {id: {$lt: req.params.id}}, order: 'id DESC', limit: 2}).then(function(facts) {
+    res.json(factView.renderFacts(facts));
   })
   .catch(function(error) {
     res.status(500).json({});
@@ -64,7 +83,8 @@ router.get('/facts/:id/prev', function(req, res) {
 });
 
 router.get('/facts/:id/next', function(req, res) {
-  models.facts.find({where: {id: {$gt: req.params.id}}}).then(function(facts) {
+  models.facts.findAll({where: {id: {$gt: req.params.id}}, limit: 2}).then(function(facts) {
+    res.json(factView.renderFacts(facts));
   })
   .catch(function(error) {
     res.status(500).json({});
