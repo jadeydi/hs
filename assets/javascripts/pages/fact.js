@@ -14,7 +14,6 @@ const Fact = React.createClass({
       url = '/facts/' + this.props.params.id;
     }
     this.serverRequest = client(url).done(function(result) {
-      console.info(result);
       this.setState(result, function() {
         if (!!this.state.prev) {
           $('.js-fact-prev').show();

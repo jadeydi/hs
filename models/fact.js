@@ -19,8 +19,8 @@ module.exports = function(sequelize, DataTypes) {
       , field: "user_id"
     },
   }, {
-    underscored: true
-    , classMethods: {
+    underscored: true,
+    classMethods: {
       associate: function(models) {
         fact.belongsTo(models.users, {
           onDelete: "CASCADE",

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var models = require('./models');
 
 var account = require('./api/routes/account');
+var attachments = require('./api/routes/attachments');
 var facts = require('./api/routes/facts');
 var home = require('./api/routes/home');
 
@@ -19,8 +20,8 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({limit: '5mb', extended: false }));
 app.use(cookieParser("4acb7538c19ab5c897798456c3ca642c"));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -73,6 +74,7 @@ app.use(function(req, res, next) {
 app.use('/api', home);
 app.use('/api', account);
 app.use('/api', facts);
+app.use('/api', attachments);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
