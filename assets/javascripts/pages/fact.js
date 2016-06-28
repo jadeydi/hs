@@ -4,13 +4,13 @@ import variables from '!json!../../../config/variables';
 
 const Fact = React.createClass({
   getInitialState: function() {
-    return {current: {}}
+    return {current: {attachments: []}}
   },
 
   componentDidMount: function() {
     var url = '/';
     if (this.props.params.id != undefined) {
-      this.setState({current: {id: this.props.params.id}})
+      this.setState({current: {id: this.props.params.id, attachments: []}})
       url = '/facts/' + this.props.params.id;
     }
     this.serverRequest = client(url).done(function(result) {
@@ -37,6 +37,11 @@ const Fact = React.createClass({
         </h1>
         <div>
           {this.state.current.description}
+        </div>
+        <div>
+          {this.state.current.attachments.map(function(attachment) {
+            return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
+          })}
         </div>
         <div>
           <a href="javascript:;" className="hiden fact prev js-fact-prev" onClick={this.prev}>prev</a>

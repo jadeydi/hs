@@ -28,6 +28,14 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
           }
         });
+        fact.hasMany(models.attachments, {
+          onDelete: "CASCADE",
+          foreignKey: 'target_id',
+          constraints: false,
+          scope: {
+            target_type: 'facts'
+          }
+        });
       }
     }
   });

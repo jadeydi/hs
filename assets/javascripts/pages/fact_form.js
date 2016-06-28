@@ -6,7 +6,7 @@ import variables from '!json!../../../config/variables';
 const FactForm = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {description: '', hero: 'mage'}
+      return {description: '', hero: 'mage', attachment_ids: []}
     },
 
     componentDidMount: function() {
@@ -59,11 +59,11 @@ const FactForm = withRouter (
       e.preventDefault();
       var id = this.props.params.id;
       if (id != undefined) {
-        this.serverRequest = client('/facts/'+id, 'PATCH', {description: this.state.description, hero: this.state.hero}).done(function(result) {
+        this.serverRequest = client('/facts/'+id, 'PATCH', {description: this.state.description, hero: this.state.hero, attachment_ids: this.state.attachment_ids}).done(function(result) {
           this.props.router.replace('/facts/'+result.id);
         }.bind(this));
       } else {
-        this.serverRequest = client('/facts', 'POST', {description: this.state.description, hero: this.state.hero}).done(function(result) {
+        this.serverRequest = client('/facts', 'POST', {description: this.state.description, hero: this.state.hero, attachment_ids: this.state.attachment_ids}).done(function(result) {
           this.props.router.replace('/facts/'+result.id);
         }.bind(this));
       }
@@ -71,7 +71,8 @@ const FactForm = withRouter (
 
     handleUpload: function(e) {
       var files = e.target.files;
-      var file = files[0];
+      var file = files[0],
+        that = this;
 
       if (files && file) {
         var reader = new FileReader();
@@ -79,7 +80,11 @@ const FactForm = withRouter (
         reader.onload = function(readerEvt) {
           var binaryString = readerEvt.target.result;
           this.serverRequest = client('/attachments', 'POST', {data: btoa(binaryString)}).done(function(result) {
-            console.info(result);
+            var arr = that.state.attachment_ids;
+            if (!arr.includes(result.id)) {
+              arr.push(result.id)
+            }
+            that.setState({attachment_ids: arr});
           }.bind(this)).always(function() {
             $('#fileupload').val('')
           });
