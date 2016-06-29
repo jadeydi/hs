@@ -7,7 +7,7 @@ var factView = require('../views/fact');
 router.post('/facts', function(req, res) {
   var body = req.body;
   req.current_user.createFact({description: body.description, hero: body.hero}).then(function(fact) {
-    models.attachments.update({targetId: fact.id, targetType: 'facts'}, {where: {id: {$in: body['attachment_ids[]']}, userId: req.current_user.id}}).then(function() {
+    models.attachments.update({targetId: fact.id, targetType: 'facts'}, {where: {id: {$in: [].concat(body['attachment_ids[]'])}, userId: req.current_user.id}}).then(function() {
       res.json(factView.renderFact(fact));
     })
     .catch(function(error) {
