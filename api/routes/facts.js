@@ -79,6 +79,19 @@ router.get('/facts/:id', function(req, res) {
   });
 });
 
+router.get('/facts/:id/edit', function(req, res) {
+  models.facts.find({where: {id: req.params.id}, include: [{model: models.attachments}]}).then(function(fact) {
+    if (fact == null) {
+      res.status(404).json({});
+    } else {
+      res.json(factView.renderFact(fact));
+    }
+  })
+  .catch(function(error) {
+    res.status(500).json({});
+  });
+});
+
 router.get('/facts/:id/prev', function(req, res) {
   models.facts.findAll({where: {id: {$lt: req.params.id}}, order: 'id DESC', limit: 2}).then(function(facts) {
     res.json(factView.renderFacts(facts));

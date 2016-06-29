@@ -6,14 +6,13 @@ import variables from '!json!../../../config/variables';
 const FactForm = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {description: '', hero: 'mage', attachment_ids: []}
+      return {description: '', hero: 'mage', attachments: [], attachment_ids: []}
     },
 
     componentDidMount: function() {
       var id = this.props.params.id;
       if ( id != undefined ) {
-        this.serverRequest = client('/facts/' + id).done(function(result) {
-          this.setState(result);
+        this.serverRequest = client('/facts/' + id + '/edit').done(function(result) { this.setState(result);
         }.bind(this));
       }
     },
@@ -35,6 +34,11 @@ const FactForm = withRouter (
                   return <option key={key} value={key}>{variables.heroes[key]}</option>
                   })}
                 </select>
+              </div>
+              <div>
+                {this.state.attachments.map(function(attachment) {
+                  return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
+                })}
               </div>
               <div>
                 <input id="fileupload" type="file" multiple onChange={this.handleUpload} />
@@ -72,19 +76,29 @@ const FactForm = withRouter (
     handleUpload: function(e) {
       var files = e.target.files;
       var file = files[0],
-        that = this;
+          that = this,
+          id = this.props.params.id,
+          data = {};
+
+      if (id != undefined) {
+        data.target_type = 'facts';
+        data.target_id = id;
+      }
 
       if (files && file) {
         var reader = new FileReader();
 
         reader.onload = function(readerEvt) {
           var binaryString = readerEvt.target.result;
-          this.serverRequest = client('/attachments', 'POST', {data: btoa(binaryString)}).done(function(result) {
-            var arr = that.state.attachment_ids;
+          data.data = btoa(binaryString);
+          this.serverRequest = client('/attachments', 'POST', data).done(function(result) {
+            var arr = that.state.attachment_ids,
+              attachments = that.state.attachments;
             if (!arr.includes(result.id)) {
               arr.push(result.id)
             }
-            that.setState({attachment_ids: arr});
+            attachments.push(result);
+            that.setState({attachments: attachments, attachment_ids: arr});
           }.bind(this)).always(function() {
             $('#fileupload').val('')
           });

@@ -28,7 +28,12 @@ router.post('/attachments', function(req, res) {
       qiniu.io.putFile(uptoken(config.bucket, key), key, fileName, extra, function(err, ret) {
         if(!err) {
           fs.unlinkSync(fileName);
-          req.current_user.createAttachment({path: key}).then(function(attachment) {
+          var data = {path: key};
+          if (body.target_id != null) {
+            data.targetType = body.target_type;
+            data.targetId = body.target_id;
+          }
+          req.current_user.createAttachment(data).then(function(attachment) {
             res.json(attachmentView.renderAttachment(attachment));
           })
           .catch(function(error) {
