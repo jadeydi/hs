@@ -1,6 +1,7 @@
 import React from 'react';
 import client from '../client';
 import variables from '!json!../../../config/variables';
+import { Link } from 'react-router';
 
 const Fact = React.createClass({
   getInitialState: function() {
@@ -30,6 +31,15 @@ const Fact = React.createClass({
   },
 
   render() {
+    var prevLink, nextLink;
+    if (!!this.state.prev) {
+      prevLink = <Link to={`/facts/${this.state.prev.id}`} className="hiden fact prev js-fact-prev"><i className="fa fa-angle-left"/></Link>;
+    }
+
+    if (!!this.state.next) {
+      nextLink = <Link to={`/facts/${this.state.next.id}`} className="hiden fact next js-fact-next"><i className="fa fa-angle-right"/></Link>;
+    }
+
     return (
       <div className='fact show'>
         <h1>
@@ -43,9 +53,10 @@ const Fact = React.createClass({
             return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
           })}
         </div>
-        <div>
-          <a href="javascript:;" className="hiden fact prev js-fact-prev" onClick={this.prev}>prev</a>
-          <a href="javascript:;" className="hiden fact next js-fact-next" onClick={this.next}>next</a>
+        <div className='action'>
+          {prevLink}
+          <span></span>
+          {nextLink}
         </div>
       </div>
     )

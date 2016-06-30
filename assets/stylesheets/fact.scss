@@ -13,4 +13,21 @@
   width: 36rem;
   max-width: 98%;
   margin: 0 auto;
+
+  .action {
+    text-align: center;
+    span {
+      padding: 0 3rem;
+    }
+  }
+
+  .prev {
+    color: #363636;
+    font-size: 3rem;
+  }
+
+  .next {
+    color: #363636;
+    font-size: 3rem;
+  }
 }
