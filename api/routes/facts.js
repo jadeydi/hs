@@ -55,7 +55,7 @@ router.get('/facts/:id', function(req, res) {
       res.status(404).json({});
     } else {
       obj.current = factView.renderFact(fact);
-      models.facts.find({where: {id: {$lt: fact.id}}, order: 'id DESC', include: [{model: models.attachments}]}).then(function(prev) {
+      models.facts.find({where: {id: {$lt: fact.id}}, order: [['id', 'DESC']], include: [{model: models.attachments}]}).then(function(prev) {
         if (prev != null) {
           obj.prev = factView.renderFact(prev);
         }
@@ -93,7 +93,7 @@ router.get('/facts/:id/edit', function(req, res) {
 });
 
 router.get('/facts/:id/prev', function(req, res) {
-  models.facts.findAll({where: {id: {$lt: req.params.id}}, order: 'id DESC', limit: 2}).then(function(facts) {
+  models.facts.findAll({where: {id: {$lt: req.params.id}}, order: [['id', 'DESC']], limit: 2, include: [{model: models.attachments}]}).then(function(facts) {
     res.json(factView.renderFacts(facts));
   })
   .catch(function(error) {
@@ -102,7 +102,7 @@ router.get('/facts/:id/prev', function(req, res) {
 });
 
 router.get('/facts/:id/next', function(req, res) {
-  models.facts.findAll({where: {id: {$gt: req.params.id}}, limit: 2}).then(function(facts) {
+  models.facts.findAll({where: {id: {$gt: req.params.id}}, limit: 2, include: [{model: models.attachments}]}).then(function(facts) {
     res.json(factView.renderFacts(facts));
   })
   .catch(function(error) {

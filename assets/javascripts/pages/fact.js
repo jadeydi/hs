@@ -33,11 +33,11 @@ const Fact = React.createClass({
   render() {
     var prevLink, nextLink;
     if (!!this.state.prev) {
-      prevLink = <Link to={`/facts/${this.state.prev.id}`} className="hiden fact prev js-fact-prev"><i className="fa fa-angle-left"/></Link>;
+      prevLink = <Link to={`/facts/${this.state.prev.id}`} className="hiden fact prev js-fact-prev" onClick={this.prev}><i className="fa fa-angle-left"/></Link>;
     }
 
     if (!!this.state.next) {
-      nextLink = <Link to={`/facts/${this.state.next.id}`} className="hiden fact next js-fact-next"><i className="fa fa-angle-right"/></Link>;
+      nextLink = <Link to={`/facts/${this.state.next.id}`} className="hiden fact next js-fact-next" onClick={this.next}><i className="fa fa-angle-right"/></Link>;
     }
 
     return (
@@ -62,7 +62,7 @@ const Fact = React.createClass({
     )
   },
 
-  prev: function(force) {
+  prev: function() {
     if (!this.state.prev) {
       return
     }
@@ -77,12 +77,12 @@ const Fact = React.createClass({
     }.bind(this));
   },
 
-  next: function(force) {
+  next: function() {
     if (!this.state.next) {
       return
     }
     this.serverRequest = client('/facts/'+this.state.current.id+'/next').done(function(result) {
-      var obj = {current: result[0], prev: this.state.current, next: result[1]}
+      var obj = {prev: this.state.current, current: result[0], next: result[1]}
       this.setState(obj, function() {
         if (this.state.next == undefined) {
           $('.js-fact-next').hide();
