@@ -4,7 +4,7 @@ var models = require('../../models');
 var factView = require('../views/fact');
 var Sequelize = require('sequelize');
 
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
   var obj = {}
   models.facts.find({order: [[Sequelize.fn('RANDOM')]], include: [{model: models.attachments}]}).then(function(fact) {
     if (fact == null) {
@@ -22,16 +22,16 @@ router.get('/', function(req, res) {
           res.json(obj);
         })
         .catch(function(error) {
-          res.status(500).json({});
+          next(error);
         });
       })
       .catch(function(error) {
-        res.status(500).json({});
+        next(error);
       });
     }
   })
   .catch(function(error) {
-    res.status(500).json({});
+    next(error);
   });
 });
 

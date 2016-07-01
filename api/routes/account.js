@@ -5,7 +5,7 @@ var userView = require('../views/user');
 var randomstring = require("randomstring");
 var passwordHash = require('password-hash');
 
-router.post('/session', function(req, res) {
+router.post('/session', function(req, res, next) {
   var body= req.body;
   models.users.findOne({where: {$or: [{username: body.identity}, {email: body.identity}]}}).then(function(user) {
     if (user == null) {
@@ -16,7 +16,7 @@ router.post('/session', function(req, res) {
       res.status(401).json({});
     }
   }).catch(function(error) {
-    res.status(500).json({});
+    next(error);
   });
 });
 
@@ -30,7 +30,7 @@ router.post('/account', function(req, res) {
     res.cookie('_cksixty_com', user.authenticationToken, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) }).json(userView.renderUser(user));
   })
   .catch(function(error) {
-    res.status(500).json({});
+    next(error);
   })
 });
 

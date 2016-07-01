@@ -4,26 +4,26 @@ var models = require('../../models');
 var factView = require('../views/fact');
 
 // TODO use transaction
-router.post('/facts', function(req, res) {
+router.post('/facts', function(req, res, next) {
   var body = req.body;
   req.current_user.createFact({description: body.description, hero: body.hero}).then(function(fact) {
     models.attachments.update({targetId: fact.id, targetType: 'facts'}, {where: {id: {$in: [].concat(body['attachment_ids[]'])}, userId: req.current_user.id}}).then(function() {
       res.json(factView.renderFact(fact));
     })
     .catch(function(error) {
-      res.status(500).json({});
+      next(error);
     })
   })
   .catch(function(error) {
     if (error.name == 'SequelizeValidationError') {
       res.status(406).json({});
     } else {
-      res.status(500).json({});
+      next(error);
     }
   });
 });
 
-router.patch('/facts/:id', function(req, res) {
+router.patch('/facts/:id', function(req, res, next) {
   models.facts.findOne({where: {id: req.params.id, userId: req.current_user.id}}).then(function(fact) {
     if (fact == null) {
       res.status(404).json({});
@@ -38,17 +38,17 @@ router.patch('/facts/:id', function(req, res) {
         if (error.name == 'SequelizeValidationError') {
           res.status(406).json({});
         } else {
-          res.status(500).json({});
+          next(error);
         }
       });
     }
   })
   .catch(function(error) {
-    res.status(500).json({});
+    next(error);
   });
 });
 
-router.get('/facts/:id', function(req, res) {
+router.get('/facts/:id', function(req, res, next) {
   models.facts.find({where: {id: req.params.id}, include: [{model: models.attachments}]}).then(function(fact) {
     var obj = {}
     if (fact == null) {
@@ -66,16 +66,16 @@ router.get('/facts/:id', function(req, res) {
           res.json(obj);
         })
         .catch(function(error) {
-          res.status(500).json({});
+          next(error);
         });
       })
       .catch(function(error) {
-        res.status(500).json({});
+        next(error);
       });
     }
   })
   .catch(function(error) {
-    res.status(500).json({});
+    next(error);
   });
 });
 
@@ -88,7 +88,7 @@ router.get('/facts/:id/edit', function(req, res) {
     }
   })
   .catch(function(error) {
-    res.status(500).json({});
+    next(error);
   });
 });
 
@@ -97,7 +97,7 @@ router.get('/facts/:id/prev', function(req, res) {
     res.json(factView.renderFacts(facts));
   })
   .catch(function(error) {
-    res.status(500).json({});
+    next(error);
   });
 });
 
@@ -106,7 +106,7 @@ router.get('/facts/:id/next', function(req, res) {
     res.json(factView.renderFacts(facts));
   })
   .catch(function(error) {
-    res.status(500).json({});
+    next(error);
   });
 });
 

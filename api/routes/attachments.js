@@ -15,18 +15,18 @@ function uptoken(bucket, key) {
   return putPolicy.token();
 }
 
-router.post('/attachments', function(req, res) {
+router.post('/attachments', function(req, res, next) {
   var body = req.body;
   var base64Data = body.data.replace(/^data:image\/png;base64,/, body.data),
       key = 'attachments/' + uuid.v4() + '.png',
       fileName = __dirname + '/../../public/' + key;
 
-  fs.writeFile(fileName, base64Data, 'base64', function(err) {
-    if (err == null) {
+  fs.writeFile(fileName, base64Data, 'base64', function(error) {
+    if (error == null) {
       var extra = new qiniu.io.PutExtra();
 
-      qiniu.io.putFile(uptoken(config.bucket, key), key, fileName, extra, function(err, ret) {
-        if(!err) {
+      qiniu.io.putFile(uptoken(config.bucket, key), key, fileName, extra, function(error, ret) {
+        if(!error) {
           fs.unlinkSync(fileName);
           var data = {path: key};
           if (body.target_id != null) {
@@ -37,14 +37,14 @@ router.post('/attachments', function(req, res) {
             res.json(attachmentView.renderAttachment(attachment));
           })
           .catch(function(error) {
-            res.status(500).json({});
+            next(error)
           });
         } else {
-          res.status(500).json({err: err});
+          next(error)
         }
       });
     } else {
-      res.status(500).json({err: err});
+      next(error)
     }
   });
 });
