@@ -1,6 +1,6 @@
 import React from 'react';
 import client from '../client';
-import variables from '!json!../../../config/variables';
+import variables from '!json!../../../../config/variables';
 import { Link } from 'react-router';
 
 const Fact = React.createClass({

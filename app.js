@@ -14,7 +14,7 @@ var home = require('./api/routes/home');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'web/views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -23,7 +23,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: false }));
 app.use(cookieParser("4acb7538c19ab5c897798456c3ca642c"));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'web/public')));
 
 app.use(function(req, res, next) {
   if (req.headers.accept == 'application/vnd.cksity.com+json') {
@@ -106,6 +106,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
