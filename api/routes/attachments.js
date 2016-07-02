@@ -19,7 +19,7 @@ router.post('/attachments', function(req, res, next) {
   var body = req.body;
   var base64Data = body.data.replace(/^data:image\/png;base64,/, body.data),
       key = 'attachments/' + uuid.v4() + '.png',
-      fileName = __dirname + '/../../public/' + key;
+      fileName = __dirname + '/../../web/public/' + key;
 
   fs.writeFile(fileName, base64Data, 'base64', function(error) {
     if (error == null) {

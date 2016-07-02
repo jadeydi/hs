@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
     }
   } else {
     if (req.method == "GET") {
-      res.render('index', { title: 'Express' });
+      res.render('index');
     } else {
       res.redirect("/")
     }

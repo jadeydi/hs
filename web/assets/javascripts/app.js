@@ -36,7 +36,7 @@ const NotFound = React.createClass({
         </h1>
         <div className='content'>
           额~ &nbsp; What are you looking for? &nbsp;
-          <Link to='/'>Home?</Link>
+          <Link to='/'>HOME?</Link>
         </div>
       </div>
     )
