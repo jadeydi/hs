@@ -1,6 +1,7 @@
 import React from 'react';
 import client from '../client';
 import variables from '!json!../../../../config/variables';
+import qiniu from '!json!../../../../config/qiniu';
 import { Link } from 'react-router';
 
 const Image = React.createClass({
@@ -48,20 +49,20 @@ const Fact = React.createClass({
   render() {
     var prevLink, nextLink;
     if (!!this.state.prev) {
-      prevLink = <Link to={`/facts/${this.state.prev.id}`} className="fact prev js-fact-prev" onClick={this.prev}><i className="fa fa-arrow-circle-o-left"/></Link>;
+      prevLink = <Link to={`/facts/${this.state.prev.id}`} className="fact prev js-fact-prev" onClick={this.prev}>&#8678;</Link>;
     } else {
-      prevLink = <a href='javascript:;' className="fact next disable js-fact-left"><i className="fa fa-arrow-circle-o-left"/></a>;
+      prevLink = <a href='javascript:;' className="fact next disable js-fact-left">&#8678;</a>;
     }
 
     if (!!this.state.next) {
-      nextLink = <Link to={`/facts/${this.state.next.id}`} className="fact next js-fact-next" onClick={this.next}><i className="fa fa-arrow-circle-o-right"/></Link>;
+      nextLink = <Link to={`/facts/${this.state.next.id}`} className="fact next js-fact-next" onClick={this.next}>&#8680;</Link>;
     } else {
-      nextLink = <a href='javascript:;' className="fact next disable js-fact-next"><i className="fa fa-arrow-circle-o-right"/></a>;
+      nextLink = <a href='javascript:;' className="fact next disable js-fact-next">&#8680;</a>;
     }
 
     return (
       <div className='fact show'>
-        <h1 className='title'>炉石传说</h1>
+        <h1 className='title'><img src={qiniu.domain + '/brands/hearthstone.png'} width='175px'/></h1>
         <h2 className='num'>
           <span className='symbol'>#</span><span>{this.state.current.id}</span>
         </h2>
