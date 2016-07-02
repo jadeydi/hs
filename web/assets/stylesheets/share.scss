@@ -11,6 +11,28 @@
   }
 }
 
+.error.page {
+  text-align: center;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin-left: -115px;
+
+  h1 {
+    font-weight: normal;
+    font-size: 3.8rem;
+  }
+
+  .content {
+    margin-top: 1rem;
+    font-size: .875rem;
+
+    a {
+      color: #363636;
+    }
+  }
+}
+
 @media (max-width: 34em) {
   .footer {
     .content {

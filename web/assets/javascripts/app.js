@@ -3,7 +3,7 @@ import '../stylesheets/app.scss';
 import 'font-awesome/css/font-awesome.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { IndexRoute, Router, Route, browserHistory } from 'react-router'
+import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
 import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
@@ -30,7 +30,15 @@ var Layout = React.createClass({
 const NotFound = React.createClass({
   render() {
     return (
-      <div> 404 </div>
+      <div className='error page'>
+        <h1>
+          404
+        </h1>
+        <div className='content'>
+          额~ &nbsp; What are you looking for? &nbsp;
+          <Link to='/'>Home?</Link>
+        </div>
+      </div>
     )
   }
 });
