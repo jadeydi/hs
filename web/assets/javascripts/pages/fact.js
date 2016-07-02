@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 const Image = React.createClass({
   render() {
     return (
-      <img src={this.props.url + '?imageView2/1/w/80/h/80'} data-url={this.props.url + '?imageView2/2/w/1000/h/700'} onClick={this.enlargeImage} />
+      <img src={this.props.url + '?imageView2/1/w/80/h/80'} data-url={this.props.url + '?imageView2/2/w/1000/h/700'} onClick={this.enlargeImage} width='80px' height='80px' />
     )
   },
 
@@ -37,6 +37,8 @@ const Fact = React.createClass({
         }
       });
     }.bind(this));
+
+    window.addEventListener('keydown', this.handleKeydown, true);
   },
 
   componentWillUnmount: function() {
@@ -113,6 +115,14 @@ const Fact = React.createClass({
 
   hidenImageModal: function() {
     $('.js-image-modal').hide();
+  },
+
+  handleKeydown: function(e) {
+    if (e.keyCode == 39 || e.keyCode == 74) {
+      this.next();
+    } else if (e.keyCode == 37 || e.keyCode == 75) {
+      this.prev();
+    }
   },
 });
 
