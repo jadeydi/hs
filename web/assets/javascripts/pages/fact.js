@@ -62,7 +62,7 @@ const Fact = React.createClass({
 
     return (
       <div className='fact show'>
-        <h1 className='title'><img src={qiniu.domain + '/brands/hearthstone.png'} width='175px'/></h1>
+        <h1 className='title'><img src={qiniu.domain + '/brands/hearthstone.png'} width='175px' height='65px'/></h1>
         <h2 className='num'>
           <span className='symbol'>#</span><span>{this.state.current.id}</span>
         </h2>
