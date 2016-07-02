@@ -3,7 +3,7 @@ import '../stylesheets/app.scss';
 import 'font-awesome/css/font-awesome.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
+import { IndexRoute, Router, Route, browserHistory } from 'react-router'
 import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
@@ -13,8 +13,15 @@ import Auth from './auth';
 var Layout = React.createClass({
   render: function() {
     return (
-      <div className="container">
-        { this.props.children }
+      <div>
+        <div className="container">
+          { this.props.children }
+        </div>
+        <div className="footer">
+          <div className="content">
+            炉石冷知识 &copy;2016
+          </div>
+        </div>
       </div>
     );
   }

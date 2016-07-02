@@ -1,0 +1,22 @@
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: .5rem;
+  font-size: 0.75rem;
+  color: #ccc;
+  box-sizing: border-box;
+
+  .content {
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 34em) {
+  .footer {
+    .content {
+      padding: 0;
+      max-width: 92%;
+      margin: 0 auto;
+    }
+  }
+}

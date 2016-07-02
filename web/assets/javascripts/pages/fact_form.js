@@ -1,7 +1,7 @@
 import React from 'react';
 import client from '../client';
 import { withRouter } from 'react-router';
-import variables from '!json!../../../config/variables';
+import variables from '!json!../../../../config/variables';
 
 const FactForm = withRouter (
   React.createClass({

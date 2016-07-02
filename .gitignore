@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-public/javascripts
-public/attachments
+/web/public/javascripts
+/web/public/attachments
 config/config.json
 config/qiniu.json
