@@ -3,6 +3,19 @@ import client from '../client';
 import variables from '!json!../../../../config/variables';
 import { Link } from 'react-router';
 
+const Image = React.createClass({
+  render() {
+    return (
+      <img src={this.props.url + '?imageView2/1/w/80/h/80'} data-url={this.props.url + '?imageView2/2/w/1000/h/700'} onClick={this.enlargeImage} />
+    )
+  },
+
+  enlargeImage: function(e) {
+    $('.js-image-container').html('<img src="'+$(e.target).data('url')+'" />');
+    $('.js-image-modal').show();
+  },
+});
+
 const Fact = React.createClass({
   getInitialState: function() {
     return {current: {attachments: []}}
@@ -53,9 +66,9 @@ const Fact = React.createClass({
         <div>
           {this.state.current.description}
         </div>
-        <div>
+        <div className='images'>
           {this.state.current.attachments.map(function(attachment) {
-            return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
+            return <Image key={attachment.id} url={attachment.path}/>
           })}
         </div>
         <div className='tags'>
@@ -65,6 +78,14 @@ const Fact = React.createClass({
           {prevLink}
           <span></span>
           {nextLink}
+        </div>
+        <div className='hiden image-modal js-image-modal'>
+          <div className='close'>
+            <a href='javascript:;' onClick={this.hidenImageModal}>✕</a>
+          </div>
+          <div className='image-container js-image-container'>
+            <img src="http://o9dhmjmlm.bkt.clouddn.com/attachments/a9adb472-53d7-4460-830e-281a72876729.png?imageView2/2/w/1000/h/700" />
+          </div>
         </div>
       </div>
     )
@@ -88,7 +109,11 @@ const Fact = React.createClass({
       var obj = {prev: this.state.current, current: result[0], next: result[1]}
       this.setState(obj);
     }.bind(this));
-  }
+  },
+
+  hidenImageModal: function() {
+    $('.js-image-modal').hide();
+  },
 });
 
 module.exports = {fact: Fact}

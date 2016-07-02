@@ -35,7 +35,7 @@ const FactForm = withRouter (
                   })}
                 </select>
               </div>
-              <div>
+              <div className='attachments'>
                 {this.state.attachments.map(function(attachment) {
                   return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
                 })}
