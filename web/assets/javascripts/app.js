@@ -9,6 +9,7 @@ import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
 import Fact from './pages/fact';
 import Auth from './auth';
+import Share from './share';
 
 var Layout = React.createClass({
   render: function() {
@@ -24,22 +25,6 @@ var Layout = React.createClass({
         </div>
       </div>
     );
-  }
-});
-
-const NotFound = React.createClass({
-  render() {
-    return (
-      <div className='error page'>
-        <h1>
-          404
-        </h1>
-        <div className='content'>
-          额~ &nbsp; What are you looking for? &nbsp;
-          <Link to='/'>HOME?</Link>
-        </div>
-      </div>
-    )
   }
 });
 
@@ -63,7 +48,8 @@ $(function() {
         <Route path="facts/:id/edit" onEnter={requireAuth} component={FactForm.factForm} />
         <Route path="facts/:id" component={Fact.fact} />
       </Route>
-      <Route path="*" component={NotFound} />
+      <Route path="/500" component={Share.serverError} />
+      <Route path="*" component={Share.notFound} />
     </Router>,
     document.getElementById('js-container')
   );
