@@ -13,9 +13,37 @@
   width: 36rem;
   max-width: 92%;
   margin: 0 auto;
+  padding-top: 3rem;
+
+  .title {
+    font-weight: normal;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .num {
+    margin-bottom: 2rem;
+    font-size: 3.2rem;
+
+    .symbol {
+      font-size: 1.6rem;
+      margin-right: .3rem;
+    }
+  }
+
+  .tags {
+    font-size: .875rem;
+    margin-top: 1.6rem;
+
+    span {
+      margin-left: .3rem;
+    }
+  }
 
   .action {
     text-align: center;
+    margin-top: 3rem;
     span {
       padding: 0 3rem;
     }
@@ -23,11 +51,19 @@
 
   .prev {
     color: #363636;
-    font-size: 3rem;
+    font-size: 3.6rem;
+
+    &.disable {
+      color: gray;
+    }
   }
 
   .next {
     color: #363636;
-    font-size: 3rem;
+    font-size: 3.6rem;
+
+    &.disable {
+      color: gray;
+    }
   }
 }

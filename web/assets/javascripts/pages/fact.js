@@ -33,18 +33,23 @@ const Fact = React.createClass({
   render() {
     var prevLink, nextLink;
     if (!!this.state.prev) {
-      prevLink = <Link to={`/facts/${this.state.prev.id}`} className="hiden fact prev js-fact-prev" onClick={this.prev}><i className="fa fa-arrow-circle-o-left"/></Link>;
+      prevLink = <Link to={`/facts/${this.state.prev.id}`} className="fact prev js-fact-prev" onClick={this.prev}><i className="fa fa-arrow-circle-o-left"/></Link>;
+    } else {
+      prevLink = <a href='javascript:;' className="fact next disable js-fact-left"><i className="fa fa-arrow-circle-o-left"/></a>;
     }
 
     if (!!this.state.next) {
-      nextLink = <Link to={`/facts/${this.state.next.id}`} className="hiden fact next js-fact-next" onClick={this.next}><i className="fa fa-arrow-circle-o-right"/></Link>;
+      nextLink = <Link to={`/facts/${this.state.next.id}`} className="fact next js-fact-next" onClick={this.next}><i className="fa fa-arrow-circle-o-right"/></Link>;
+    } else {
+      nextLink = <a href='javascript:;' className="fact next disable js-fact-next"><i className="fa fa-arrow-circle-o-right"/></a>;
     }
 
     return (
       <div className='fact show'>
-        <h1>
-          {variables.heroes[this.state.current.hero]} #{this.state.current.id}
-        </h1>
+        <h1 className='title'>炉石传说</h1>
+        <h2 className='num'>
+          <span className='symbol'>#</span><span>{this.state.current.id}</span>
+        </h2>
         <div>
           {this.state.current.description}
         </div>
@@ -52,6 +57,9 @@ const Fact = React.createClass({
           {this.state.current.attachments.map(function(attachment) {
             return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
           })}
+        </div>
+        <div className='tags'>
+          标签: <span>{variables.heroes[this.state.current.hero]}</span>
         </div>
         <div className='action'>
           {prevLink}
@@ -68,12 +76,7 @@ const Fact = React.createClass({
     }
     this.serverRequest = client('/facts/'+this.state.current.id+'/prev').done(function(result) {
       var obj = {next: this.state.current, current: result[0], prev: result[1]}
-      this.setState(obj, function() {
-        if (this.state.prev == undefined) {
-          $('.js-fact-prev').hide();
-        }
-        $('.js-fact-next').show();
-      });
+      this.setState(obj);
     }.bind(this));
   },
 
@@ -83,12 +86,7 @@ const Fact = React.createClass({
     }
     this.serverRequest = client('/facts/'+this.state.current.id+'/next').done(function(result) {
       var obj = {prev: this.state.current, current: result[0], next: result[1]}
-      this.setState(obj, function() {
-        if (this.state.next == undefined) {
-          $('.js-fact-next').hide();
-        }
-        $('.js-fact-prev').show();
-      });
+      this.setState(obj);
     }.bind(this));
   }
 });
