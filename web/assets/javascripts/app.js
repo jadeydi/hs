@@ -21,7 +21,7 @@ var Layout = React.createClass({
         </div>
         <div className="footer">
           <div className="content">
-            <Link to='/'>cksixty.com</Link> &copy;2016
+            <Link to='/'>CKSIXTY.COM</Link> &copy;2016
             <Link to='/about'>关于网站</Link>
           </div>
         </div>

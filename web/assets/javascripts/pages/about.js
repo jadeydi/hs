@@ -5,7 +5,7 @@ const About = React.createClass({
     return (
       <div className='about page'>
         <h3>
-          关于网站:
+          关于网站
         </h3>
         <p>
           用来收集游戏(目前只有炉石传说)中的一些技巧，(冷)知识。这些内容来自各个角落，并非原创，侵删！
