@@ -61,14 +61,18 @@ const Fact = withRouter (
         nextLink = <a href='javascript:;' className="fact next disable js-fact-next">&#8680;</a>;
       }
 
+      var description = this.state.current.description;
+      if (description != undefined) {
+        description = description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+      }
+
       return (
         <div className='fact show'>
           <h1 className='title'><img src={qiniu.domain + '/brands/hearthstone.png'} width='175px' height='65px'/></h1>
           <h2 className='num'>
             <span className='symbol'>#</span><span>{this.state.current.id}</span>
           </h2>
-          <div>
-            {this.state.current.description}
+          <div dangerouslySetInnerHTML={{__html: description}}>
           </div>
           <div className='images'>
             {this.state.current.attachments.map(function(attachment) {
