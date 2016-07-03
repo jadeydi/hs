@@ -8,6 +8,7 @@ import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
 import Fact from './pages/fact';
+import About from './pages/about';
 import Auth from './auth';
 import Share from './share';
 
@@ -40,8 +41,9 @@ function requireAuth(nextState, replace) {
 $(function() {
   ReactDOM.render(
     <Router history={browserHistory}>
-      <Route path= '/' component={Layout}>
+      <Route path="/" component={Layout}>
         <IndexRoute component={Fact.fact} />
+        <Route path="/about" component={About.about} />
         <Route path="account/sign_in" component={SignIn.signIn} />
         <Route path="account/sign_up" component={SignUp.signUp} />
         <Route path="facts/new" onEnter={requireAuth} component={FactForm.factForm} />
