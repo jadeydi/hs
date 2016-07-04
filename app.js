@@ -4,14 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var models = require('./models');
+var app = express();
 
+// routes
 var account = require('./api/routes/account');
 var attachments = require('./api/routes/attachments');
 var facts = require('./api/routes/facts');
 var home = require('./api/routes/home');
-
-var app = express();
+// middleware
+var auth = require('./middleware/authenticate');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'web/views'));
@@ -25,50 +26,8 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: false }));
 app.use(cookieParser("4acb7538c19ab5c897798456c3ca642c"));
 app.use(express.static(path.join(__dirname, 'web/public')));
 
-app.use(function(req, res, next) {
-  if (req.headers.accept == 'application/vnd.cksity.com+json') {
-    token = req.cookies._cksixty_com
-    if(token != undefined) {
-      models.users.findOne({where: {authenticationToken: token}}).then(function(user) {
-        req.current_user = user;
-        next();
-      }).catch(function(error) {
-        res.status(500).json({});
-      })
-    } else {
-      next();
-    }
-  } else {
-    if (req.method == "GET") {
-      res.render('index');
-    } else {
-      res.redirect("/")
-    }
-  }
-});
-
-var whiteList = [
-  ["GET", "^/api/$"],
-  ["POST", "^/api/session$"],
-  ["POST", "^/api/account$"],
-  ["GET", "^/api/facts/[0-9]{1,24}$"],
-  ["GET", "^/api/facts/[0-9]{1,24}/prev$"],
-  ["GET", "^/api/facts/[0-9]{1,24}/next$"],
-]
-
-function authenticate(req) {
-  return whiteList.some(function(item) {
-    return item[0] == req.method && (new RegExp(item[1])).test(req.path)
-  });
-}
-
-app.use(function(req, res, next) {
-  if (req.current_user != undefined || authenticate(req)) {
-    next();
-  } else {
-    res.status(401).json({})
-  }
-});
+app.use(auth.handleRouter);
+app.use(auth.authenticate);
 
 // api routes
 app.use('/api', home);
@@ -82,8 +41,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-// error handlers
 
 // development error handler
 // will print stacktrace
