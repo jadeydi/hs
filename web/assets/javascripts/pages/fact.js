@@ -80,7 +80,7 @@ const Fact = withRouter (
               })}
             </div>
             <div className='tags'>
-              标签: <span>{variables.heroes[this.state.current.hero]}</span>
+              标签: <span>{variables.heroes[this.state.current.tags]}</span>
             </div>
             <div className='action'>
               {prevLink}

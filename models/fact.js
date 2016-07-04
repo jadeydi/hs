@@ -8,11 +8,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    hero: {
+    tags: {
       type: DataTypes.STRING,
       validate: {
         isIn: [Object.keys(variables.heroes)],
       },
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER

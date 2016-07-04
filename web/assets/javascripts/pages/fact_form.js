@@ -6,13 +6,14 @@ import variables from '!json!../../../../config/variables';
 const FactForm = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {description: '', hero: 'mage', attachments: [], attachment_ids: []}
+      return {description: '', tags: 'mage', status: 'standard', attachments: [], attachment_ids: []}
     },
 
     componentDidMount: function() {
       var id = this.props.params.id;
       if ( id != undefined ) {
-        this.serverRequest = client('/facts/' + id + '/edit').done(function(result) { this.setState(result);
+        this.serverRequest = client('/facts/' + id + '/edit').done(function(result) {
+          this.setState(result);
         }.bind(this));
       }
     },
@@ -22,6 +23,14 @@ const FactForm = withRouter (
     },
 
     render() {
+      var statusRadios = Object.keys(variables.status).map(function(key) {
+        return (
+          <label key={key} className='pure-radio'>
+            <input id="option-two" type="radio" name="status" value={key} checked={this.state.status == key} onClick={this.handleStatus} /> {variables.status[key]}
+          </label>
+        );
+      }, this);
+
       return (
         <div className='fact form'>
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
@@ -29,7 +38,7 @@ const FactForm = withRouter (
               <textarea className='pure-input-1 desc' placeholder='DESCRIPTION' value={this.state.description} onChange={this.handleDescription} />
             </div>
             <div>
-              <select className='pure-input-1' onChange={this.handleHero} value={this.state.hero}>
+              <select className='pure-input-1' onChange={this.handleTags} value={this.state.tags}>
                 {Object.keys(variables.heroes).map(function(key) {
                   return <option key={key} value={key}>{variables.heroes[key]}</option>
                   })}
@@ -39,6 +48,9 @@ const FactForm = withRouter (
                 {this.state.attachments.map(function(attachment) {
                   return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
                 })}
+              </div>
+              <div>
+                {statusRadios}
               </div>
               <div>
                 <input id="fileupload" type="file" multiple onChange={this.handleUpload} />
@@ -55,19 +67,24 @@ const FactForm = withRouter (
       this.setState({description: e.target.value});
     },
 
-    handleHero: function(e) {
-      this.setState({hero: e.target.value});
+    handleTags: function(e) {
+      this.setState({tags: e.target.value});
+    },
+
+    handleStatus: function(e) {
+      this.setState({status: $(e.target).val()});
     },
 
     handleSubmit: function(e) {
       e.preventDefault();
-      var id = this.props.params.id;
+      var id = this.props.params.id,
+      data = {description: this.state.description, tags: this.state.tags, status: this.state.status, attachment_ids: this.state.attachment_ids};
       if (id != undefined) {
-        this.serverRequest = client('/facts/'+id, 'PATCH', {description: this.state.description, hero: this.state.hero, attachment_ids: this.state.attachment_ids}).done(function(result) {
+        this.serverRequest = client('/facts/'+id, 'PATCH', data).done(function(result) {
           this.props.router.replace('/facts/'+result.id);
         }.bind(this));
       } else {
-        this.serverRequest = client('/facts', 'POST', {description: this.state.description, hero: this.state.hero, attachment_ids: this.state.attachment_ids}).done(function(result) {
+        this.serverRequest = client('/facts', 'POST', data).done(function(result) {
           this.props.router.replace('/facts/'+result.id);
         }.bind(this));
       }

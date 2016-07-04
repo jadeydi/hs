@@ -6,7 +6,7 @@ module.exports = {
     if (!!fact.attachments) {
       attachments = attachmentView.renderAttachments(fact.attachments)
     }
-    return {id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at, attachments: attachments};
+    return {id: fact.id, description: fact.description, tags: fact.tags, status: fact.status, user_id: fact.user_id, created_at: fact.created_at, attachments: attachments};
   },
 
   renderFacts(facts) {
@@ -15,7 +15,7 @@ module.exports = {
       if (!!fact.attachments) {
         attachments = attachmentView.renderAttachments(fact.attachments)
       }
-      return {id: fact.id, description: fact.description, hero: fact.hero, user_id: fact.user_id, created_at: fact.created_at, attachments: attachments};
+      return {id: fact.id, description: fact.description, tags: fact.tags, status: fact.status, user_id: fact.user_id, created_at: fact.created_at, attachments: attachments};
     });
   }
 }

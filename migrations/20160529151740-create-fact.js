@@ -12,7 +12,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
-      hero: {
+      tags: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      status: {
         allowNull: true,
         type: Sequelize.STRING
       },
@@ -36,7 +40,7 @@ module.exports = {
     })
     .then(() => {
       queryInterface.addIndex("facts", ["user_id"], {});
-      queryInterface.addIndex("facts", ["hero"], {});
+      queryInterface.addIndex("facts", ["tags"], {});
     });
   },
   down: function(queryInterface, Sequelize) {

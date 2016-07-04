@@ -6,7 +6,7 @@ var factView = require('../views/fact');
 // TODO use transaction
 router.post('/facts', function(req, res, next) {
   var body = req.body;
-  req.current_user.createFact({description: body.description, hero: body.hero}).then(function(fact) {
+  req.current_user.createFact({description: body.description, tags: body.tags, status: body.status}).then(function(fact) {
     models.attachments.update({targetId: fact.id, targetType: 'facts'}, {where: {id: {$in: [].concat(body['attachment_ids[]'])}, userId: req.current_user.id}}).then(function() {
       res.json(factView.renderFact(fact));
     })
@@ -30,7 +30,8 @@ router.patch('/facts/:id', function(req, res, next) {
     } else {
       var body = req.body;
       fact.description = body.description
-      fact.hero = body.hero
+      fact.tags = body.tags
+      fact.status = body.status
       fact.save().then(function(fact) {
         res.json(factView.renderFact(fact));
       })

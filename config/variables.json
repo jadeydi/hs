@@ -10,5 +10,10 @@
     "shaman": "萨满",
     "priest": "牧师",
     "neutral": "中立"
+  },
+  "status": {
+    "standard": "标准模式",
+    "wild": "狂野模式",
+    "departed": "旧版本"
   }
 }

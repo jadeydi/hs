@@ -36,3 +36,15 @@ h1 {
 a {
   text-decoration: none;
 }
+
+.pure-form {
+  .pure-checkbox {
+    display: inline-block;
+    margin-right: .5rem;
+  }
+
+  .pure-radio {
+    display: inline-block;
+    margin-right: .5rem;
+  }
+}
