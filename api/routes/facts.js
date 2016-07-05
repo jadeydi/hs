@@ -60,7 +60,7 @@ router.get('/facts/:id', function(req, res, next) {
         if (prev != null) {
           obj.prev = factView.renderFact(prev);
         }
-        models.facts.find({where: {id: {$gt: fact.id}}, include: [{model: models.attachments}]}).then(function(next) {
+        models.facts.find({where: {id: {$gt: fact.id}}, order: [['id', 'ASC']], include: [{model: models.attachments}]}).then(function(next) {
           if (next != null) {
             obj.next = factView.renderFact(next);
           }
@@ -103,7 +103,7 @@ router.get('/facts/:id/prev', function(req, res) {
 });
 
 router.get('/facts/:id/next', function(req, res) {
-  models.facts.findAll({where: {id: {$gt: req.params.id}}, limit: 2, include: [{model: models.attachments}]}).then(function(facts) {
+  models.facts.findAll({where: {id: {$gt: req.params.id}}, order: [['id', 'ASC']], limit: 2, include: [{model: models.attachments}]}).then(function(facts) {
     res.json(factView.renderFacts(facts));
   })
   .catch(function(error) {
