@@ -79,8 +79,11 @@ const Fact = withRouter (
               return <Image key={attachment.id} url={attachment.path}/>
               })}
             </div>
-            <div className='tags'>
+            <div className='tags other'>
               标签: <span>{variables.heroes[this.state.current.tags]}</span>
+            </div>
+            <div className='status other'>
+              状态: <span>{variables.status[this.state.current.status]}</span>
             </div>
             <div className='action'>
               {prevLink}
