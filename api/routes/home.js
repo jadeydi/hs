@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
         if (prev != null) {
           obj.prev = factView.renderFact(prev);
         }
-        models.facts.find({where: {id: {$gt: fact.id}}, include: [{model: models.attachments}]}).then(function(next) {
+        models.facts.find({where: {id: {$gt: fact.id}}, order: [['id', 'ASC']], include: [{model: models.attachments}]}).then(function(next) {
           if (next != null) {
             obj.next = factView.renderFact(next);
           }
