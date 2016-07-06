@@ -20,7 +20,7 @@ const Image = React.createClass({
 const Fact = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {current: {attachments: []}}
+      return {current: {tags: [], attachments: []}}
     },
 
     componentDidMount: function() {
@@ -80,7 +80,12 @@ const Fact = withRouter (
               })}
             </div>
             <div className='tags other'>
-              标签: <span>{variables.heroes[this.state.current.tags]}</span>
+              标签:
+              {this.state.current.tags.map(function(key) {
+                return (
+                  <span key={key}>{variables.heroes[key]}</span>
+                )
+              })}
             </div>
             <div className='status other'>
               状态: <span>{variables.status[this.state.current.status]}</span>

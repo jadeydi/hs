@@ -7,7 +7,7 @@ import Share from '../share';
 const FactForm = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {description: '', tags: 'mage', status: 'standard', attachments: [], attachment_ids: []}
+      return {description: '', tags: [], status: 'standard', attachments: [], attachment_ids: []}
     },
 
     componentDidMount: function() {
@@ -24,10 +24,19 @@ const FactForm = withRouter (
     },
 
     render() {
+      var tagsCheckbox = Object.keys(variables.heroes).map(function(key) {
+        return (
+          <label key={key} className="pure-checkbox">
+            <input type="checkbox" name="tags" value={key} checked={this.state.tags.includes(key)} onClick={this.handleTags} />
+            {variables.heroes[key]}
+          </label>
+        );
+      }, this);
+
       var statusRadios = Object.keys(variables.status).map(function(key) {
         return (
           <label key={key} className='pure-radio'>
-            <input id="option-two" type="radio" name="status" value={key} checked={this.state.status == key} onClick={this.handleStatus} /> {variables.status[key]}
+            <input type="radio" name="status" value={key} checked={this.state.status == key} onClick={this.handleStatus} /> {variables.status[key]}
           </label>
         );
       }, this);
@@ -39,13 +48,7 @@ const FactForm = withRouter (
               <textarea className='pure-input-1 desc' placeholder='DESCRIPTION' value={this.state.description} onChange={this.handleDescription} />
             </div>
             <div>
-              <select className='pure-input-1' onChange={this.handleTags} value={this.state.tags}>
-                {Object.keys(variables.heroes).map(function(key) {
-                  return (
-                    <option key={key} value={key}>{variables.heroes[key]}</option>
-                    )
-                })}
-              </select>
+              {tagsCheckbox}
             </div>
             <div className='attachments'>
               {this.state.attachments.map(function(attachment) {
@@ -73,12 +76,24 @@ const FactForm = withRouter (
       this.setState({description: e.target.value});
     },
 
-    handleTags: function(e) {
-      this.setState({tags: e.target.value});
-    },
-
     handleStatus: function(e) {
       this.setState({status: $(e.target).val()});
+    },
+
+    handleTags: function(e) {
+      var tags,
+      obj = $(e.target);
+      console.info(obj.is(':checked'));
+      console.info(obj.val());
+      if (obj.is(':checked')) {
+        this.state.tags.push(obj.val());
+        tags = this.state.tags;
+      } else {
+        var i = this.state.tags.indexOf(obj.val());
+        this.state.tags.splice(i, 1);
+        tags = this.state.tags;
+      }
+      this.setState({tags: tags});
     },
 
     handleSubmit: function(e) {

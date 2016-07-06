@@ -9,10 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     tags: {
-      type: DataTypes.STRING,
-      validate: {
-        isIn: [Object.keys(variables.heroes)],
-      },
+      type: DataTypes.ARRAY(DataTypes.STRING),
     },
     status: {
       type: DataTypes.STRING,
