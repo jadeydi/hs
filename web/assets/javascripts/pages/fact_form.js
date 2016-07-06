@@ -2,6 +2,7 @@ import React from 'react';
 import client from '../client';
 import { withRouter } from 'react-router';
 import variables from '!json!../../../../config/variables';
+import Share from '../share';
 
 const FactForm = withRouter (
   React.createClass({
@@ -40,26 +41,31 @@ const FactForm = withRouter (
             <div>
               <select className='pure-input-1' onChange={this.handleTags} value={this.state.tags}>
                 {Object.keys(variables.heroes).map(function(key) {
-                  return <option key={key} value={key}>{variables.heroes[key]}</option>
-                  })}
-                </select>
-              </div>
-              <div className='attachments'>
-                {this.state.attachments.map(function(attachment) {
-                  return <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
+                  return (
+                    <option key={key} value={key}>{variables.heroes[key]}</option>
+                    )
                 })}
-              </div>
-              <div>
-                {statusRadios}
-              </div>
-              <div>
-                <input id="fileupload" type="file" multiple onChange={this.handleUpload} />
-              </div>
-              <div>
-                <input type="submit" value="Submit" className='pure-input-1 pure-button pure-button-primary' />
-              </div>
-            </form>
-          </div>
+              </select>
+            </div>
+            <div className='attachments'>
+              {this.state.attachments.map(function(attachment) {
+                return (
+                  <img key={attachment.id} src={attachment.path + '?imageView2/1/w/80/h/80'} />
+                  )
+              })}
+            </div>
+            <div>
+              {statusRadios}
+            </div>
+            <div>
+              <input className="fileupload js-fileupload" id="fileupload" type="file" multiple onChange={this.handleUpload} />
+              <Share.spinner attr="small js-spinner" />
+            </div>
+            <div>
+              <input type="submit" value="Submit" className='pure-input-1 pure-button pure-button-primary js-submit' />
+            </div>
+          </form>
+        </div>
       )
     },
 
@@ -105,6 +111,7 @@ const FactForm = withRouter (
       if (files && file) {
         var reader = new FileReader();
 
+        this.toggleUpload(true)
         reader.onload = function(readerEvt) {
           var binaryString = readerEvt.target.result;
           data.data = btoa(binaryString);
@@ -117,13 +124,26 @@ const FactForm = withRouter (
             attachments.push(result);
             that.setState({attachments: attachments, attachment_ids: arr});
           }.bind(this)).always(function() {
-            $('#fileupload').val('')
-          });
+            $('#fileupload').val('');
+            that.toggleUpload(false);
+          }.bind(this));
         };
 
         reader.readAsBinaryString(file);
       }
     },
+
+    toggleUpload: function(state) {
+      if (state) {
+        $('.js-fileupload').prop('disabled', true);
+        $('.js-submit').prop('disabled', true);
+        $('.js-spinner').css('display', 'inline-block');
+      } else {
+        $('.js-submit').prop('disabled', false);
+        $('.js-fileupload').prop('disabled', false);
+        $('.js-spinner').hide();
+      }
+    }
   })
 );
 
