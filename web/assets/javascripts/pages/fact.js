@@ -106,6 +106,7 @@ const Fact = withRouter (
       if (!this.state.prev) {
         return
       }
+      this.setState({prev: undefined});
       this.serverRequest = client('/facts/'+this.state.current.id+'/prev').done(function(result) {
         var obj = {next: this.state.current, current: result[0], prev: result[1]}
         this.setState(obj, function() {
@@ -118,6 +119,7 @@ const Fact = withRouter (
       if (!this.state.next) {
         return
       }
+      this.setState({next: undefined});
       this.serverRequest = client('/facts/'+this.state.current.id+'/next').done(function(result) {
         var obj = {prev: this.state.current, current: result[0], next: result[1]}
         this.setState(obj, function() {
