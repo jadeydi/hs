@@ -9,7 +9,8 @@
     "warlock": "术士",
     "shaman": "萨满",
     "priest": "牧师",
-    "neutral": "中立"
+    "neutral": "中立",
+    "arena": "竞技场"
   },
   "status": {
     "standard": "标准模式",
