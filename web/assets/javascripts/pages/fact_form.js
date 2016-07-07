@@ -83,8 +83,6 @@ const FactForm = withRouter (
     handleTags: function(e) {
       var tags,
       obj = $(e.target);
-      console.info(obj.is(':checked'));
-      console.info(obj.val());
       if (obj.is(':checked')) {
         this.state.tags.push(obj.val());
         tags = this.state.tags;
