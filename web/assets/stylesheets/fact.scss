@@ -27,15 +27,24 @@
   padding-top: 3rem;
 
   .title {
-    font-weight: normal;
-    font-size: 1.2rem;
+    font-weight: 100;
+    font-size: 1.6rem;
     text-align: center;
     margin-bottom: 2rem;
+
+    span {
+      color: #F45551;
+    }
   }
 
   .num {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 3.2rem;
+
+    .decoration {
+      padding: 0 .3rem;
+      border-bottom: 4px solid #F45551;
+    }
 
     .symbol {
       font-size: 1.6rem;
@@ -51,9 +60,16 @@
   }
 
   .other {
+    color: #999;
     font-size: .875rem;
+    margin-top: .2rem;
+
     span {
-      margin-left: .3rem;
+      margin-left: .6rem;
+
+      &.decoration {
+        margin-left: 0;
+      }
     }
   }
 
@@ -62,30 +78,39 @@
   }
 
   .action {
-    text-align: center;
-    margin-top: 3rem;
+    width: 12rem;
+    margin: 3rem auto 0;
+
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
     .spinner {
       margin: 0 2rem;
     }
   }
 
   .prev {
-    color: #363636;
-    font-size: 3.6rem;
+    color: rgba(54,54,54,0.8);
+    font-size: 2.6rem;
     font-weight: 100;
+    float: left;
 
     &.disable {
-      color: gray;
+      color: rgba(128,128,128,0.8);
     }
   }
 
   .next {
-    color: #363636;
-    font-size: 3.6rem;
+    color: rgba(54,54,54,0.8);
+    font-size: 2.6rem;
     font-weight: 100;
+    float: right;
 
     &.disable {
-      color: gray;
+      color: rgba(128,128,128,0.8);
     }
   }
 

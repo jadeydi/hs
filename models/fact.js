@@ -1,7 +1,5 @@
 'use strict';
 
-var variables = require(__dirname + '/../config/variables.json');
-
 module.exports = function(sequelize, DataTypes) {
   var fact = sequelize.define('facts', {
     description: {

@@ -68,9 +68,13 @@ const Fact = withRouter (
 
       return (
         <div className='fact show'>
-          <h1 className='title'><img src={qiniu.domain + '/brands/hearthstone.png'} width='175px' height='65px'/></h1>
+          <h1 className='title'>
+            🎮  炉石传说
+          </h1>
           <h2 className='num'>
-            <span className='symbol'>#</span><span>{this.state.current.id}</span>
+            <span className='decoration'>
+              <span className='symbol'>#</span><span>{this.state.current.id}</span>
+            </span>
           </h2>
           <div dangerouslySetInnerHTML={{__html: description}}>
           </div>
@@ -80,15 +84,19 @@ const Fact = withRouter (
               })}
             </div>
             <div className='tags other'>
-              标签:
-              {this.state.current.tags.map(function(key) {
-                return (
-                  <span key={key}>{variables.heroes[key]}</span>
-                )
-              })}
+              <span className='decoration'>
+                职业:
+                {this.state.current.tags.map(function(key) {
+                  return (
+                    <span key={key}>{variables.heroes[key]}</span>
+                    )
+                })}
+              </span>
             </div>
             <div className='status other'>
-              状态: <span>{variables.status[this.state.current.status]}</span>
+              <span className='decoration'>
+                适用:<span>{variables.status[this.state.current.status]}</span>
+              </span>
             </div>
             <div className='action'>
               {prevLink}

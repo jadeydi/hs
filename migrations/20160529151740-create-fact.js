@@ -13,9 +13,9 @@ module.exports = {
         type: Sequelize.TEXT
       },
       tags: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.ARRAY(Sequelize.STRING),
-        defaultValue: '{}'
+        defaultValue: []
       },
       status: {
         allowNull: true,
