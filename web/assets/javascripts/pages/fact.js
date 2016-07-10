@@ -52,7 +52,7 @@ const Fact = withRouter (
       if (!!this.state.prev) {
         prevLink = <Link to={`/facts/${this.state.prev.id}`} className="fact prev js-fact-prev" onClick={this.prev}>&#8678;</Link>;
       } else {
-        prevLink = <a href='javascript:;' className="fact next disable js-fact-left">&#8678;</a>;
+        prevLink = <a href='javascript:;' className="fact prev disable js-fact-left">&#8678;</a>;
       }
 
       if (!!this.state.next) {
