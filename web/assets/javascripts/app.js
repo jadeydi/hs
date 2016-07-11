@@ -8,6 +8,7 @@ import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import FactForm from './pages/fact_form';
 import Fact from './pages/fact';
+import Card from './pages/card';
 import About from './pages/about';
 import Auth from './auth';
 import Share from './share';
@@ -50,6 +51,8 @@ $(function() {
         <Route path="facts/new" onEnter={requireAuth} component={FactForm.factForm} />
         <Route path="facts/:id/edit" onEnter={requireAuth} component={FactForm.factForm} />
         <Route path="facts/:id" component={Fact.fact} />
+        <Route path="cards" component={Card.card} />
+        <Route path="cards/:id" component={Card.card} />
       </Route>
       <Route path="/500" component={Share.serverError} />
       <Route path="*" component={Share.notFound} />

@@ -10,6 +10,7 @@ var app = express();
 var account = require('./api/routes/account');
 var attachments = require('./api/routes/attachments');
 var facts = require('./api/routes/facts');
+var cards = require('./api/routes/cards');
 var home = require('./api/routes/home');
 // middleware
 var auth = require('./middleware/authenticate');
@@ -33,6 +34,7 @@ app.use(auth.authenticate);
 app.use('/api', home);
 app.use('/api', account);
 app.use('/api', facts);
+app.use('/api', cards);
 app.use('/api', attachments);
 
 // catch 404 and forward to error handler

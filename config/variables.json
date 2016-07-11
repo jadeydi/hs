@@ -16,5 +16,14 @@
     "standard": "标准模式",
     "wild": "狂野模式",
     "departed": "旧版本"
+  },
+  "rarity": {
+    "free": "免费",
+    "common": "普通",
+    "rare": "稀有",
+    "epic": "史诗",
+    "legendary": "传说"
+  },
+  "attributes": {
   }
 }

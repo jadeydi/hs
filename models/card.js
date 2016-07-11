@@ -2,7 +2,10 @@
 module.exports = function(sequelize, DataTypes) {
   var card = sequelize.define('cards', {
     name: DataTypes.STRING,
-    name_en: DataTypes.STRING,
+    nameEn: {
+      type: DataTypes.STRING,
+      field: "name_en"
+    },
     rarity: DataTypes.STRING,
     cover: DataTypes.STRING,
     properties: {
@@ -10,7 +13,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     description: DataTypes.STRING,
     occupation: DataTypes.STRING,
-    card_type: DataTypes.STRING,
+    cardType: {
+      type: DataTypes.STRING,
+      field: "card_type"
+    },
     mana: DataTypes.INTEGER,
     attack: DataTypes.INTEGER,
     health: DataTypes.INTEGER

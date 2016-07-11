@@ -21,22 +21,6 @@
 }
 
 .fact.show {
-  width: 36rem;
-  max-width: 92%;
-  margin: 0 auto;
-  padding-top: 3rem;
-
-  .title {
-    font-weight: 100;
-    font-size: 1.6rem;
-    text-align: center;
-    margin-bottom: 2rem;
-
-    span {
-      color: #F45551;
-    }
-  }
-
   .num {
     margin-bottom: 1rem;
     font-size: 3.2rem;
@@ -75,43 +59,6 @@
 
   .tags {
     margin-top: 1.6rem;
-  }
-
-  .action {
-    width: 12rem;
-    margin: 3rem auto 0;
-
-    &:after {
-      content: '';
-      display: block;
-      clear: both;
-    }
-
-    .spinner {
-      margin: 0 2rem;
-    }
-  }
-
-  .prev {
-    color: rgba(54,54,54,0.8);
-    font-size: 2.6rem;
-    font-weight: 100;
-    float: left;
-
-    &.disable {
-      color: rgba(128,128,128,0.8);
-    }
-  }
-
-  .next {
-    color: rgba(54,54,54,0.8);
-    font-size: 2.6rem;
-    font-weight: 100;
-    float: right;
-
-    &.disable {
-      color: rgba(128,128,128,0.8);
-    }
   }
 
   .image-modal {

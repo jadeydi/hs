@@ -6,8 +6,9 @@ module.exports = {
   },
 
   renderAttachments(attachments) {
+    var that = this;
     return attachments.map(function(attachment) {
-      return {id: attachment.id, path: config.domain + attachment.path, target_type: attachment.target_type, target_id: attachment.target_id, user_id: attachment.user_id, created_at: attachment.created_at};
+      return that.renderAttachment(attachment);
     });
   }
 }

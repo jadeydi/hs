@@ -26,7 +26,7 @@ const Fact = withRouter (
     componentDidMount: function() {
       var url = '/';
       if (this.props.params.id != undefined) {
-        this.setState({current: {id: this.props.params.id, attachments: []}})
+        this.setState({current: {id: this.props.params.id, tags: [], attachments: []}})
         url = '/facts/' + this.props.params.id;
       }
       this.serverRequest = client(url).done(function(result) {
@@ -39,7 +39,6 @@ const Fact = withRouter (
           }
         });
       }.bind(this));
-
       window.addEventListener('keydown', this.handleKeydown, true);
     },
 
@@ -67,7 +66,7 @@ const Fact = withRouter (
       }
 
       return (
-        <div className='fact show'>
+        <div className='fact show page'>
           <h1 className='title'>
             🎮  炉石传说
           </h1>
@@ -80,38 +79,40 @@ const Fact = withRouter (
           </div>
           <div className='images'>
             {this.state.current.attachments.map(function(attachment) {
-              return <Image key={attachment.id} url={attachment.path}/>
+              return (
+                <Image key={attachment.id} url={attachment.path}/>
+                )
+            })}
+          </div>
+          <div className='tags other'>
+            <span className='decoration'>
+              职业:
+              {this.state.current.tags.map(function(key) {
+                return (
+                  <span key={key}>{variables.heroes[key]}</span>
+                  )
               })}
+            </span>
+          </div>
+          <div className='status other'>
+            <span className='decoration'>
+              适用:<span>{variables.status[this.state.current.status]}</span>
+            </span>
+          </div>
+          <div className='action'>
+            {prevLink}
+            <span></span>
+            {nextLink}
+          </div>
+          <div className='hiden image-modal js-image-modal'>
+            <div className='close'>
+              <a href='javascript:;' onClick={this.hidenImageModal}>✕</a>
             </div>
-            <div className='tags other'>
-              <span className='decoration'>
-                职业:
-                {this.state.current.tags.map(function(key) {
-                  return (
-                    <span key={key}>{variables.heroes[key]}</span>
-                    )
-                })}
-              </span>
-            </div>
-            <div className='status other'>
-              <span className='decoration'>
-                适用:<span>{variables.status[this.state.current.status]}</span>
-              </span>
-            </div>
-            <div className='action'>
-              {prevLink}
-              <span></span>
-              {nextLink}
-            </div>
-            <div className='hiden image-modal js-image-modal'>
-              <div className='close'>
-                <a href='javascript:;' onClick={this.hidenImageModal}>✕</a>
-              </div>
-              <div className='image-container js-image-container'>
-                <img src="http://o9dhmjmlm.bkt.clouddn.com/attachments/a9adb472-53d7-4460-830e-281a72876729.png?imageView2/2/w/1000/h/700" />
-              </div>
+            <div className='image-container js-image-container'>
+              <img src="" />
             </div>
           </div>
+        </div>
       )
     },
 
