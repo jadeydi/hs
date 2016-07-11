@@ -24,6 +24,28 @@
     "epic": "史诗",
     "legendary": "传说"
   },
-  "attributes": {
+  "properties": {
+    "Battlecry": "战吼",
+    "DrawOverload": "过载",
+    "Overload": "过载",
+    "Taunt": "嘲讽",
+    "Deathrattle": "亡语",
+    "Combo": "连击",
+    "Freeze": "冰冻",
+    "Enrage": "激怒",
+    "Summon": "召唤",
+    "Silence": "沉默",
+    "Secret": "奥秘" ,
+    "Choose One": "抉择",
+    "Choose": "抉择",
+    "Discover": "发现",
+    "Windfury": "风怒",
+    "Inspire": "激励",
+    "Divine": "圣盾",
+    "Charge": "冲锋",
+    "Spell_power": "法强",
+    "Divine Shield": "圣盾",
+    "Stealth": "潜行",
+    "Draw": "抽牌"
   }
 }

@@ -6,13 +6,13 @@ import { Link, withRouter } from 'react-router';
 const Card = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {current: {}}
+      return {current: {properties: []}}
     },
 
     componentDidMount: function() {
       var url = '/cards';
       if (this.props.params.id != undefined) {
-        this.setState({current: {id: this.props.params.id}})
+        this.setState({current: {id: this.props.params.id, properties: []}})
         url = '/cards/' + this.props.params.id;
       }
       this.serverRequest = client(url).done(function(result) {
@@ -26,7 +26,7 @@ const Card = withRouter (
     },
 
     render: function() {
-      var prevLink, nextLink;
+      var prevLink, nextLink, properties;
       if (!!this.state.prev) {
         prevLink = <Link to={`/cards/${this.state.prev.id}`} className="fact prev js-fact-prev" onClick={this.prev}>&#8678;</Link>;
       } else {
@@ -37,6 +37,19 @@ const Card = withRouter (
         nextLink = <Link to={`/cards/${this.state.next.id}`} className="fact next js-fact-next" onClick={this.next}>&#8680;</Link>;
       } else {
         nextLink = <a href='javascript:;' className="fact next disable js-fact-next">&#8680;</a>;
+      }
+
+      if (this.state.current.properties.length > 0) {
+        properties = <div>
+          特点:
+          {this.state.current.properties.map(function(key) {
+            return (
+              <span key={key}>{variables.properties[key]}</span>
+              )
+          })}
+        </div>
+      } else {
+        properties =  <div></div>;
       }
 
       return (
@@ -53,14 +66,14 @@ const Card = withRouter (
               <div className='desc'>
                 {this.state.current.description}
               </div>
-              <div>
-                {this.state.current.occupation}
-              </div>
-              <div>
-                {variables.rarity[this.state.current.rarity]}
-              </div>
-              <div>
-                {this.state.current.properties}
+              <div className='other'>
+                <div>
+                  类型:<span>{variables.rarity[this.state.current.rarity]}</span>
+                </div>
+                <div>
+                  职业:<span>{this.state.current.occupation}</span>
+                </div>
+                {properties}
               </div>
             </div>
           </div>
