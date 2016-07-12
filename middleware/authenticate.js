@@ -7,6 +7,9 @@ var whiteList = [
   ["GET", "^/api/facts/[0-9]{1,24}$"],
   ["GET", "^/api/facts/[0-9]{1,24}/prev$"],
   ["GET", "^/api/facts/[0-9]{1,24}/next$"],
+  ["GET", "^/api/cards/[0-9]{1,24}$"],
+  ["GET", "^/api/cards/[0-9]{1,24}/prev$"],
+  ["GET", "^/api/cards/[0-9]{1,24}/next$"],
 ]
 
 function valid(req) {
