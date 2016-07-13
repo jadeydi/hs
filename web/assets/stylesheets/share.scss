@@ -54,6 +54,7 @@
   position: absolute;
   bottom: .5rem;
   font-size: 0.75rem;
+  font-color: 100;
   color: #ccc;
   box-sizing: border-box;
 
@@ -63,7 +64,10 @@
 
   a {
     color: #ccc;
-    margin-left: 1rem;
+  }
+
+  .about {
+    margin-left: .3rem;
   }
 }
 
