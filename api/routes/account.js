@@ -25,7 +25,7 @@ router.post('/account', function(req, res) {
   var salt = randomstring.generate(16);
   var token = randomstring.generate({ charset: 'hex' });
   var password = passwordHash.generate(body.password + salt);
-  models.users.create({username: body.username, email: body.email, salt: salt, encryptedPassword: password, authenticationToken: token})
+  models.users.create({username: body.username, nickname: body.nickname, email: body.email, salt: salt, encryptedPassword: password, authenticationToken: token})
   .then(function(user) {
     res.cookie('_cksixty_com', user.authenticationToken, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) }).json(userView.renderUser(user));
   })

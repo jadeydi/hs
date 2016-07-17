@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: false }));
 app.use(cookieParser("4acb7538c19ab5c897798456c3ca642c"));
 app.use(express.static(path.join(__dirname, 'web/public')));
 
+app.use(auth.currentUser);
 app.use(auth.handleRouter);
 app.use(auth.authenticate);
 

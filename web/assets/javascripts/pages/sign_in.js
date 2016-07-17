@@ -14,13 +14,13 @@ const SignIn = withRouter (
         <div className='account sign_in'>
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
-              <input className='pure-input-1' type='text' name='identity' placeholder='USERNAME, EMAIL' value={this.state.identity} onChange={this.handleIdentity} />
+              <input className='pure-input-1' type='text' name='identity' placeholder='用户名, 邮箱' value={this.state.identity} onChange={this.handleIdentity} />
             </div>
             <div>
-              <input className='pure-input-1' type='password' name='password' placeholder='PASSWORD' value={this.state.password} onChange={this.handlePassword} />
+              <input className='pure-input-1' type='password' name='password' placeholder='密码' value={this.state.password} onChange={this.handlePassword} />
             </div>
             <div>
-              <input type="submit" value="Submit" className="pure-button pure-button-primary pure-input-1"/>
+              <input type="submit" value="登录" className="pure-button pure-button-primary pure-input-1"/>
             </div>
           </form>
         </div>

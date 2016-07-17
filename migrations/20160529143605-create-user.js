@@ -12,6 +12,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      nickname: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      role: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: 'fellow'
+      },
       email: {
         allowNull: false,
         type: Sequelize.STRING
@@ -47,6 +56,7 @@ module.exports = {
 };
 /*
 CREATE UNIQUE INDEX ON users ((LOWER(username)));
+ALTER TABLE users ADD CHECK (username ~* '^[a-z0-9][a-z0-9_]{1,31}$');
 CREATE UNIQUE INDEX ON users ((LOWER(email)));
 CREATE UNIQUE INDEX ON users (authentication_token);
 */
