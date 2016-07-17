@@ -28,15 +28,15 @@ const Card = withRouter (
     render: function() {
       var prevLink, nextLink, properties;
       if (!!this.state.prev) {
-        prevLink = <Link to={`/cards/${this.state.prev.id}`} className="fact prev js-fact-prev" onClick={this.prev}>&#8678;</Link>;
+        prevLink = <Link to={`/cards/${this.state.prev.id}`} className="fact prev js-fact-prev" onClick={this.prev}>&#x25B7;</Link>;
       } else {
-        prevLink = <a href='javascript:;' className="fact prev disable js-fact-left">&#8678;</a>;
+        prevLink = <a href='javascript:;' className="fact prev disable js-fact-left">&#x25B7;</a>;
       }
 
       if (!!this.state.next) {
-        nextLink = <Link to={`/cards/${this.state.next.id}`} className="fact next js-fact-next" onClick={this.next}>&#8680;</Link>;
+        nextLink = <Link to={`/cards/${this.state.next.id}`} className="fact next js-fact-next" onClick={this.next}>&#x25B7;</Link>;
       } else {
-        nextLink = <a href='javascript:;' className="fact next disable js-fact-next">&#8680;</a>;
+        nextLink = <a href='javascript:;' className="fact next disable js-fact-next">&#x25B7;</a>;
       }
 
       if (this.state.current.properties.length > 0) {
@@ -77,10 +77,9 @@ const Card = withRouter (
               </div>
             </div>
           </div>
-          <div className='action'>
-            {prevLink}
-            <span></span>
+          <div className='key action'>
             {nextLink}
+            {prevLink}
           </div>
         </div>
       )
