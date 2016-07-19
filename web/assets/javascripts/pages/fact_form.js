@@ -42,7 +42,7 @@ const FactForm = withRouter (
       }, this);
 
       return (
-        <div className='fact form'>
+        <div className='fact form page'>
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
               <textarea className='pure-input-1 desc' placeholder='DESCRIPTION' value={this.state.description} onChange={this.handleDescription} />

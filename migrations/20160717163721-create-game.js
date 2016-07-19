@@ -20,7 +20,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       cover: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       platforms: {

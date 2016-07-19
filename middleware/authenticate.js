@@ -10,13 +10,18 @@ var whiteList = [
   ["GET", "^/api/cards/[0-9]{1,24}$"],
   ["GET", "^/api/cards/[0-9]{1,24}/prev$"],
   ["GET", "^/api/cards/[0-9]{1,24}/next$"],
+  ["GET", "^/api/games/[0-9]{1,24}$"],
 ]
 
 var adminList = [
   ["GET", "^/facts/new$"],
   ["GET", "^/facts/[0-9]{1,24}/edit$"],
+  ["GET", "^/games/new$"],
+  ["GET", "^/games/[0-9]{1,24}/edit$"],
   ["POST", "^/api/facts$"],
   ["PATCH", "^/api/facts/[0-9]{1,24}"],
+  ["POST", "^/api/games"],
+  ["PATCH", "^/api/games/[0-9]{1,24}"],
 ]
 
 function valid(req) {

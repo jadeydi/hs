@@ -1,10 +1,10 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var game = sequelize.define('game', {
+  var game = sequelize.define('games', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
     description: DataTypes.TEXT,
     website: {
       type: DataTypes.STRING,
@@ -14,10 +14,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     cover: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isUrl: true
-      },
     },
     platforms: {
       type: DataTypes.ARRAY(DataTypes.STRING),
@@ -26,7 +22,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       field: "user_id"
     }
-  }, {
+  },
+  {
     underscored: true,
     classMethods: {
       associate: function(models) {

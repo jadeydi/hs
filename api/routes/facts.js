@@ -29,7 +29,6 @@ router.patch('/facts/:id', function(req, res, next) {
       res.status(404).json({});
     } else {
       var body = req.body;
-      console.info(body);
       fact.description = body.description
       fact.tags = [].concat(body["tags[]"])
       fact.status = body.status
