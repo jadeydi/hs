@@ -83,7 +83,7 @@ const GameForm = withRouter (
     },
 
     render() {
-      var platformsCheckbox = ['Android', 'iOS', 'Windows'].map(function(key) {
+      var platformsCheckbox = ['iPhone', 'Android', 'iPad', 'Windows'].map(function(key) {
         return (
           <label key={key} className="pure-checkbox">
             <input type="checkbox" name="platform" value={key} checked={this.state.platforms.includes(key)} onClick={this.handlePlatforms} />
