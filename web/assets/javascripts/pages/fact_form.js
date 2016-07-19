@@ -97,16 +97,17 @@ const FactForm = withRouter (
     handleSubmit: function(e) {
       e.preventDefault();
       var id = this.props.params.id,
-      data = {description: this.state.description, tags: this.state.tags, status: this.state.status, attachment_ids: this.state.attachment_ids};
+        data = {description: this.state.description, tags: this.state.tags, status: this.state.status, attachment_ids: this.state.attachment_ids},
+        url = '/facts', method = 'POST';
       if (id != undefined) {
-        this.serverRequest = client('/facts/'+id, 'PATCH', data).done(function(result) {
-          this.props.router.replace('/facts/'+result.id);
-        }.bind(this));
-      } else {
-        this.serverRequest = client('/facts', 'POST', data).done(function(result) {
-          this.props.router.replace('/facts/'+result.id);
-        }.bind(this));
+        url = '/facts/'+id;
+        method = 'PATCH';
       }
+
+      this.serverRequest = client(url, method, data).done(function(result) {
+        this.props.router.replace('/facts/'+result.id);
+      }.bind(this)).always(function() {
+      });
     },
 
     handleUpload: function(e) {

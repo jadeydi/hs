@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 const GameForm = withRouter (
   React.createClass({
     getInitialState() {
-      return {name: '', description: '', website: '', cover: '', coverData: '', platforms: []}
+      return {name: '', description: '', website: '', cover: null, coverData: null, platforms: []}
     },
 
     componentDidMount() {
@@ -74,9 +74,12 @@ const GameForm = withRouter (
         url = '/games/' + id;
       }
 
+      $('.js-submit').prop('disabled', true);
       this.serverRequest = client(url, method, {name: this.state.name, description: this.state.description, website: this.state.website, platforms: this.state.platforms, coverData: this.state.coverData}).done(function(result) {
         this.props.router.replace('/games/'+result.id);
-      }.bind(this));
+      }.bind(this)).always(function() {
+        $('.js-fileupload').prop('disabled', false);
+      });
     },
 
     render() {
@@ -88,6 +91,19 @@ const GameForm = withRouter (
           </label>
         );
       }, this);
+
+      var cover;
+      if (this.state.coverData != null && this.state.coverData != '') {
+        cover = <div>
+                  <img className='cover' src={"data:image/png;base64," + this.state.coverData} />
+                </div>
+      } else if (this.state.cover != null) {
+        cover = <div>
+                  <img className='cover' src={this.state.cover + '?imageView2/1/w/80/h/80'} />
+                </div>
+      } else {
+        cover = <div> </div>
+      }
 
       return (
         <div className='game page form'>
@@ -111,6 +127,7 @@ const GameForm = withRouter (
             <div>
               <input className="fileupload js-fileupload" id="fileupload" type="file" multiple onChange={this.handleCover} />
             </div>
+            {cover}
             <div>
               <input type="submit" value="提交" className='pure-input-1 pure-button pure-button-primary js-submit' />
             </div>
