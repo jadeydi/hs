@@ -8,6 +8,19 @@ const GameForm = withRouter (
       return {name: '', description: '', website: '', cover: '', coverData: '', platforms: []}
     },
 
+    componentDidMount() {
+      var id = this.props.params.id;
+      if (id != undefined) {
+        this.serverRequest = client(`/games/${id}/edit`).done(function(result) {
+          this.setState(result);
+        }.bind(this));
+      }
+    },
+
+    componentWillUnmount() {
+      this.serverRequest.abort();
+    },
+
     handleName(e) {
       this.setState({name: e.target.value});
     },

@@ -19,6 +19,20 @@ router.get('/games/:id', function(req, res, next) {
   });
 });
 
+router.get('/games/:id/edit', function(req, res, next) {
+  models.games.find({where: {id: req.params.id, userId: req.current_user.id}}).then(function(game) {
+    if (game == null) {
+      var error = new Error()
+      error.status = 404
+      next(error)
+    } else {
+      res.json(gameView.renderGameView(game))
+    }
+  }).catch(function(error) {
+    next(error);
+  });
+});
+
 router.post('/games', function(req, res, next) {
   var body = req.body;
   req.current_user.createGame(gameView.renderGame(body)).then(function(game) {
