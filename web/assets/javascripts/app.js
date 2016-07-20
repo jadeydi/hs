@@ -1,4 +1,5 @@
 import 'purecss/build/pure-min.css';
+import 'purecss/build/grids-responsive-min.css';
 import '../stylesheets/app.scss';
 import 'font-awesome/css/font-awesome.css';
 import React from 'react';

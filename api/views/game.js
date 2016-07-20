@@ -13,7 +13,7 @@ module.exports = {
     return data
   },
 
-  renderGameViews(games) {
+  renderGamesView(games) {
     var that = this;
     return games.map(function(game) {
       return that.renderGameView(game);
