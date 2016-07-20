@@ -25,7 +25,8 @@ router.post('/facts', function(req, res, next) {
 });
 
 router.patch('/facts/:id', function(req, res, next) {
-  models.facts.findOne({where: {id: req.params.id, userId: req.current_user.id}}).then(function(fact) {
+  co(function* () {
+    var fact = yield models.facts.find({where: {id: req.params.id, userId: req.current_user.id}})
     if (fact == null) {
       res.status(404).json({});
     } else {
@@ -33,19 +34,10 @@ router.patch('/facts/:id', function(req, res, next) {
       fact.description = body.description
       fact.tags = [].concat(body["tags[]"])
       fact.status = body.status
-      fact.save().then(function(fact) {
-        res.json(factView.renderFact(fact));
-      })
-      .catch(function(error) {
-        if (error.name == 'SequelizeValidationError') {
-          res.status(406).json({});
-        } else {
-          next(error);
-        }
-      });
+      var fact = yield fact.save()
+      res.json(factView.renderFact(fact));
     }
-  })
-  .catch(function(error) {
+  }).catch(function(error) {
     next(error);
   });
 });
