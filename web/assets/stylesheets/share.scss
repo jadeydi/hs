@@ -1,8 +1,7 @@
 .page.show {
-  width: 36rem;
+  width: 720px;
   max-width: 92%;
   margin: 0 auto;
-  padding-top: 3rem;
 
   .title {
     font-weight: 100;
@@ -55,9 +54,10 @@
 }
 
 .footer {
+  text-align: center;
   width: 100%;
   position: absolute;
-bottom: .5rem;
+  bottom: .5rem;
   font-size: 0.75rem;
   font-color: 100;
   color: #ccc;
@@ -69,6 +69,9 @@ bottom: .5rem;
 
   a {
     color: #ccc;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .about {

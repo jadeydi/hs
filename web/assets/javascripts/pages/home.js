@@ -2,16 +2,13 @@ import React from 'react';
 import {withRouter} from 'react-router';
 import client from '../client';
 
-const Game = withRouter (
+const Home = withRouter (
   React.createClass({
     getInitialState() {
       return {platforms: []};
     },
 
     componentDidMount() {
-      this.serverRequest = client(`/games/${this.props.params.id}`).done(function(result) {
-        this.setState(result);
-      }.bind(this));
     },
 
     componentWillUnmount() {
@@ -19,26 +16,12 @@ const Game = withRouter (
     },
 
     render() {
-      var cover;
-      if (this.state.cover != null) {
-        cover = <img src={this.state.cover + '?imageView2/1/w/720/h/405'} className='cover'/>
-      } else {
-        cover = <div></div>;
-      }
-
-      var platforms = this.state.platforms.map(function(key) {
-        return <span>{key}</span>
-      });
-
       return (
         <div className='game show page'>
-          {cover}
           <div className='content'>
             <div className='info'>
-              <h1>
-                {this.state.name}
-              </h1>
-              <div className='platforms'>
+              {this.state.name}
+              <div>
                 {platforms}
               </div>
             </div>
@@ -52,4 +35,4 @@ const Game = withRouter (
   })
 );
 
-module.exports = {game: Game};
+module.exports = {home: Home};

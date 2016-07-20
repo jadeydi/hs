@@ -6,7 +6,11 @@ module.exports = {
   },
 
   renderGameView(game) {
-    return {id: game.id, name: game.name, description: game.description, website: game.website, platforms: game.platforms, cover: config.domain + game.cover}
+    var data = {id: game.id, name: game.name, description: game.description, website: game.website, platforms: game.platforms}
+    if (game.cover != null) {
+      data.cover = config.domain + game.cover;
+    }
+    return data
   },
 
   renderGameViews(games) {

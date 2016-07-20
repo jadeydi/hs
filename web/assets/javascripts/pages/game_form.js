@@ -94,13 +94,9 @@ const GameForm = withRouter (
 
       var cover;
       if (this.state.coverData != null && this.state.coverData != '') {
-        cover = <div>
-                  <img className='cover' src={"data:image/png;base64," + this.state.coverData} />
-                </div>
+        cover = <div> <img className='cover' src={"data:image/png;base64," + this.state.coverData} /> </div>
       } else if (this.state.cover != null) {
-        cover = <div>
-                  <img className='cover' src={this.state.cover + '?imageView2/1/w/80/h/80'} />
-                </div>
+        cover = <div> <img className='cover' src={this.state.cover + '?imageView2/1/w/80/h/80'} /> </div>
       } else {
         cover = <div> </div>
       }

@@ -10,6 +10,7 @@ import FactForm from './pages/fact_form';
 import Fact from './pages/fact';
 import GameForm from './pages/game_form';
 import Game from './pages/game';
+import Home from './pages/home';
 import Card from './pages/card';
 import About from './pages/about';
 import Auth from './auth';
@@ -24,8 +25,8 @@ var Layout = React.createClass({
         </div>
         <div className="footer">
           <div className="content">
-             &copy;2016 <Link to='/'>攻略</Link>
-            <Link to='/about' className="about">关于网站</Link>
+            &copy;2016 All Rights Reserved
+            <Link to='/about' className="about">About Us</Link>
           </div>
         </div>
       </div>
@@ -46,7 +47,7 @@ $(function() {
   ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Layout}>
-        <IndexRoute component={Fact.fact} />
+        <IndexRoute component={Home.home} />
         <Route path="/about" component={About.about} />
         <Route path="account/sign_in" component={SignIn.signIn} />
         <Route path="account/sign_up" component={SignUp.signUp} />
