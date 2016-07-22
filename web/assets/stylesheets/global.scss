@@ -21,6 +21,32 @@ h1 {
   margin: 0;
 }
 
+.pure-form {
+  input {
+    box-shadow: none !important;
+  }
+}
+
+.rich-text-editor {
+  .RichEditor-styleButton {
+    display: inline-block;
+    padding: .2rem .5rem .3rem 0;
+    cursor: pointer;
+
+    &.RichEditor-activeButton {
+      color: #5890ff;
+    }
+  }
+
+  .RichEditor-editor {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 6px;
+    min-height: 5rem;
+  }
+}
+
 .container {
   padding-bottom: 3rem;
 }

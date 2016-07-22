@@ -1,6 +1,9 @@
 import React from 'react';
 import client from '../client';
 import { withRouter } from 'react-router';
+import Editor from './editor'
+import {ContentState, convertFromHTML} from 'draft-js';
+import {stateToHTML} from 'draft-js-export-html';
 
 const GameForm = withRouter (
   React.createClass({
@@ -12,6 +15,7 @@ const GameForm = withRouter (
       var id = this.props.params.id;
       if (id != undefined) {
         this.serverRequest = client(`/games/${id}/edit`).done(function(result) {
+          result.descriptionData = result.description;
           this.setState(result);
         }.bind(this));
       }
@@ -25,8 +29,8 @@ const GameForm = withRouter (
       this.setState({name: e.target.value});
     },
 
-    handleDesc(e) {
-      this.setState({description: e.target.value});
+    handleDesc(text) {
+      this.setState({descriptionData: text});
     },
 
     handleWebsite(e) {
@@ -74,8 +78,10 @@ const GameForm = withRouter (
         url = '/games/' + id;
       }
 
+      var data = stateToHTML(ContentState.createFromBlockArray(convertFromHTML(this.state.descriptionData)));
+
       $('.js-submit').prop('disabled', true);
-      this.serverRequest = client(url, method, {name: this.state.name, description: this.state.description, website: this.state.website, platforms: this.state.platforms, coverData: this.state.coverData}).done(function(result) {
+      this.serverRequest = client(url, method, {name: this.state.name, description: data, website: this.state.website, platforms: this.state.platforms, coverData: this.state.coverData}).done(function(result) {
         this.props.router.replace('/games/'+result.id);
       }.bind(this)).always(function() {
         $('.js-fileupload').prop('disabled', false);
@@ -102,22 +108,24 @@ const GameForm = withRouter (
       }
 
       return (
-        <div className='game page form'>
+        <div className='page form game'>
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
-              <label for="name">名称</label>
+              <label for="name">Name</label>
               <input className='pure-input-1' value={this.state.name} onChange={this.handleName} />
             </div>
             <div>
-              <label className='pure-input-1' for="description">描述</label>
-              <textarea className='pure-input-1 desc' value={this.state.description} onChange={this.handleDesc} />
+              <label className='pure-input-1' for="description">Description</label>
+              <div className='rich-text-editor'>
+                <Editor.richEditor value={this.state.description} handleDesc={this.handleDesc} />
+              </div>
             </div>
             <div>
-              <label className='pure-input-1 website' for="website">网站</label>
-              <input className='pure-input-1' value={this.state.website} onChange={this.handleWebsite} />
+              <label className='pure-input-1 website' for="website">Website</label>
+              <input className='pure-input-1' value={this.state.website} />
             </div>
             <div>
-              <label className='pure-input-1 platforms' for="website">平台</label>
+              <label className='pure-input-1 platforms' for="website">Platforms</label>
               {platformsCheckbox}
             </div>
             <div>
@@ -125,7 +133,7 @@ const GameForm = withRouter (
             </div>
             {cover}
             <div>
-              <input type="submit" value="提交" className='pure-input-1 pure-button pure-button-primary js-submit' />
+              <input type="submit" value="Submit" className='pure-input-1 pure-button pure-button-primary js-submit' />
             </div>
           </form>
         </div>
