@@ -27,26 +27,6 @@ h1 {
   }
 }
 
-.rich-text-editor {
-  .RichEditor-styleButton {
-    display: inline-block;
-    padding: .2rem .5rem .3rem 0;
-    cursor: pointer;
-
-    &.RichEditor-activeButton {
-      color: #5890ff;
-    }
-  }
-
-  .RichEditor-editor {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    padding: 6px;
-    min-height: 5rem;
-  }
-}
-
 .container {
   padding-bottom: 3rem;
 }
@@ -72,5 +52,16 @@ a {
   .pure-radio {
     display: inline-block;
     margin-right: .5rem;
+  }
+}
+
+.rich-editor {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+  .text-editor {
+    padding: .5em .6em;
+    min-height: 6rem;
   }
 }

@@ -1,4 +1,5 @@
 import 'purecss/build/pure-min.css';
+import 'medium-editor/src/sass/medium-editor.scss';
 import 'purecss/build/grids-responsive-min.css';
 import '../stylesheets/app.scss';
 import 'font-awesome/css/font-awesome.css';

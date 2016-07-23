@@ -11,7 +11,7 @@ router.post('/attachments', function(req, res, next) {
 
   qiniu.upload(key, body.data, next, function() {
     var data = {path: key};
-    if (body.target_id != null) {
+    if (body.target_id != null && data.targetType != null) {
       data.targetType = body.target_type;
       data.targetId = body.target_id;
     }

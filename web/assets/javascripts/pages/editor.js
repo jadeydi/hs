@@ -1,176 +1,91 @@
 import React from 'react';
-import {Editor, EditorState, RichUtils, ContentState, convertFromHTML} from 'draft-js';
-import {stateToHTML} from 'draft-js-export-html';
+import MediumEditor from 'medium-editor';
+import 'medium-editor/dist/css/medium-editor.css';
+import 'medium-editor/dist/css/themes/beagle.css';
+import client from '../client';
 
-class RichEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {editorState: EditorState.createEmpty()};
+function handleDrop(e) {
+  //kill any default behavior
+  e.stopPropagation();
+  e.preventDefault();
+  //get x and y coordinates of the dropped item
+  var x = e.clientX,
+    y = e.clientY;
 
-    this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => {
-      props.handleDesc(stateToHTML(editorState.getCurrentContent()));
-      return this.setState({editorState});
+  var fileList = e.dataTransfer.files;
+  for (var i = 0; i < fileList.length; i++) {
+    var file = e.dataTransfer.files[i];
+    //don't try to mess with non-image files
+    if (file.type.match('image.*')) {
+      //we have a file handle, need to read it with file reader!
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(readerEvt) {
+        //get the data uri
+          var binaryString = readerEvt.target.result;
+          var data = {};
+          data.data = binaryString;
+
+        //make a new image element with the data as the source
+        var img = document.createElement("img");
+        var name = Math.random().toString(32).substring(5) + i;
+        img.className = name;
+        img.style.cssText = 'max-width: 320px; max-height: 270px;';
+        img.src = URL.createObjectURL(file);
+
+        client('/attachments', 'POST', data).done(function(result) {
+          img.src = result.path;
+          img.className = 'content-image'
+          img.style.cssText = ''
+        });
+
+        //Insert the image at the carat
+
+        // Try the standards-based way first. This works in FF
+        if (document.caretPositionFromPoint) {
+          var pos = document.caretPositionFromPoint(x, y),
+            range = document.createRange();
+          range.setStart(pos.offsetNode, pos.offset);
+          range.collapse();
+          range.insertNode(img);
+        } else if (document.caretRangeFromPoint) {
+          // Next, the WebKit way. This works in Chrome.
+          var range = document.caretRangeFromPoint(x, y);
+          range.insertNode(img);
+        } else {
+          //not supporting IE right now.
+          console.log('could not find carat');
+        }
+      });
+      //this reads in the file, and the onload event triggers, which adds the image to the div at the carat
+      reader.readAsDataURL(file);
     }
-
-    this.handleKeyCommand = (command) => this._handleKeyCommand(command);
-    this.toggleBlockType = (type) => this._toggleBlockType(type);
-    this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
   }
+}
 
-  _handleKeyCommand(command) {
-    const {editorState} = this.state;
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      this.onChange(newState);
-      return true;
-    }
-    return false;
-  }
-
-  _toggleBlockType(blockType) {
-    this.onChange(
-      RichUtils.toggleBlockType(
-        this.state.editorState,
-        blockType
-      )
-    );
-  }
-
-  _toggleInlineStyle(inlineStyle) {
-    this.onChange(
-      RichUtils.toggleInlineStyle(
-        this.state.editorState,
-        inlineStyle
-      )
-    );
-  }
+const RichEditor = React.createClass({
+  componentDidMount() {
+    var editor = new MediumEditor('.text-editor', {
+      placeholder: {
+        text: '',
+      },
+      autoLink: true,
+      imageDragging: false,
+    });
+    var dropZone = document.getElementById('js-editor');
+    dropZone.addEventListener('drop', handleDrop, false);
+  },
 
   componentWillReceiveProps(nextProps) {
-    const blockArray = convertFromHTML(nextProps.value);
-    this.state = {editorState: EditorState.createWithContent(ContentState.createFromBlockArray(blockArray))};
-  }
-
-  render() {
-    const {editorState} = this.state;
-
-    // If the user changes block type before entering any text, we can
-    // either style the placeholder or hide it. Let's just hide it now.
-    let className = 'RichEditor-editor';
-    var contentState = editorState.getCurrentContent();
-    if (!contentState.hasText()) {
-      if (contentState.getBlockMap().first().getType() !== 'unstyled') {
-        className += ' RichEditor-hidePlaceholder';
-      }
-    }
-
-    return (
-      <div className="RichEditor-root">
-        <StyleControls
-          editorState={editorState}
-          onInlineToggle={this.toggleInlineStyle}
-          onBlockToggle={this.toggleBlockType}
-        />
-        <div className={className} onClick={this.focus}>
-          <Editor
-            blockStyleFn={getBlockStyle}
-            customStyleMap={styleMap}
-            editorState={editorState}
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={this.onChange}
-            placeholder="Tell a story..."
-            ref="editor"
-            spellCheck={true}
-          />
-        </div>
-      </div>
-    );
-  }
-}
-
-// Custom overrides for "code" style.
-const styleMap = {
-  CODE: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2,
+    $('.text-editor').html(nextProps.value);
   },
-};
-
-function getBlockStyle(block) {
-  switch (block.getType()) {
-    case 'blockquote': return 'RichEditor-blockquote';
-    default: return null;
-  }
-}
-
-const BLOCK_TYPES = [
-  {label: 'H3', style: 'header-three'},
-  {label: 'H4', style: 'header-four'},
-  {label: 'Quote', style: 'blockquote'},
-  {label: 'UL', style: 'unordered-list-item'},
-];
-
-var INLINE_STYLES = [
-  {label: 'B', style: 'BOLD'},
-  {label: 'U', style: 'UNDERLINE'},
-];
-
-const StyleControls = (props) => {
-  const {editorState} = props;
-  const selection = editorState.getSelection();
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
-  var currentStyle = props.editorState.getCurrentInlineStyle();
-
-  return (
-    <div className="RichEditor-controls">
-      {INLINE_STYLES.map(type =>
-        <StyleButton
-          active={currentStyle.has(type.style)}
-          label={type.label}
-          onToggle={props.onInlineToggle}
-          style={type.style}
-        />
-      )}
-
-      {BLOCK_TYPES.map((type) =>
-        <StyleButton
-          active={type.style === blockType}
-          label={type.label}
-          onToggle={props.onBlockToggle}
-          style={type.style}
-        />
-      )}
-    </div>
-  );
-};
-
-class StyleButton extends React.Component {
-  constructor() {
-    super();
-    this.onToggle = (e) => {
-      e.preventDefault();
-      this.props.onToggle(this.props.style);
-    };
-  }
 
   render() {
-    let className = 'RichEditor-styleButton';
-    if (this.props.active) {
-      className += ' RichEditor-activeButton';
-    }
-
     return (
-      <span className={className} onMouseDown={this.onToggle}>
-        {this.props.label}
-      </span>
-    );
+      <div className="text-editor" id="js-editor"> </div>
+    )
   }
-}
-
+});
 
 module.exports = {richEditor: RichEditor};

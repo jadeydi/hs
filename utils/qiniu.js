@@ -13,7 +13,7 @@ function uptoken(bucket, key) {
 
 module.exports = {
   upload: function(key, data, next, callback) {
-    var base64Data = data.replace(/^data:image\/png;base64,/, data),
+    var base64Data = data.replace(/^data:image\/.+;base64,/, ''),
     fileName = '/tmp/' + uuid.v4();
 
     fs.writeFile(fileName, base64Data, 'base64', function(error) {

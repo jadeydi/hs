@@ -15,7 +15,6 @@ const GameForm = withRouter (
       var id = this.props.params.id;
       if (id != undefined) {
         this.serverRequest = client(`/games/${id}/edit`).done(function(result) {
-          result.descriptionData = result.description;
           this.setState(result);
         }.bind(this));
       }
@@ -27,10 +26,6 @@ const GameForm = withRouter (
 
     handleName(e) {
       this.setState({name: e.target.value});
-    },
-
-    handleDesc(text) {
-      this.setState({descriptionData: text});
     },
 
     handleWebsite(e) {
@@ -78,10 +73,8 @@ const GameForm = withRouter (
         url = '/games/' + id;
       }
 
-      var data = stateToHTML(ContentState.createFromBlockArray(convertFromHTML(this.state.descriptionData)));
-
       $('.js-submit').prop('disabled', true);
-      this.serverRequest = client(url, method, {name: this.state.name, description: data, website: this.state.website, platforms: this.state.platforms, coverData: this.state.coverData}).done(function(result) {
+      this.serverRequest = client(url, method, {name: this.state.name, description: $('.rich-editor .text-editor').html(), website: this.state.website, platforms: this.state.platforms, coverData: this.state.coverData}).done(function(result) {
         this.props.router.replace('/games/'+result.id);
       }.bind(this)).always(function() {
         $('.js-fileupload').prop('disabled', false);
@@ -116,8 +109,8 @@ const GameForm = withRouter (
             </div>
             <div>
               <label className='pure-input-1' for="description">Description</label>
-              <div className='rich-text-editor'>
-                <Editor.richEditor value={this.state.description} handleDesc={this.handleDesc} />
+              <div className='rich-editor'>
+                <Editor.richEditor value={this.state.description} />
               </div>
             </div>
             <div>
