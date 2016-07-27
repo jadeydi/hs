@@ -20,12 +20,24 @@ const Home = withRouter (
 
     render() {
       var games = this.state.games.map(function(game) {
+
+        var platforms = game.platforms.map(function(key) {
+          return <span>{key}</span>
+        });
+
         return (
           <div key={game.id} className='pure-u-1 pure-u-md-1-2 item'>
             <div className='game'>
-              <img src={game.cover + '?imageMogr2/auto-orient/thumbnail/!720x405r/gravity/Center/crop/720x405'} className='cover' />
+              <Link to={'/games/'+game.id}>
+                <img src={game.cover + '?imageMogr2/auto-orient/thumbnail/!720x405r/gravity/Center/crop/720x405'} className='cover' />
+              </Link>
               <div className='info'>
-                <Link to={'/games/'+game.id} className='name'> {game.name} </Link>
+                <Link to={'/games/'+game.id} className='name'>
+                  {game.name}
+                </Link>
+                <div className='platforms'>
+                  {platforms}
+                </div>
               </div>
             </div>
           </div>

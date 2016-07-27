@@ -109,13 +109,13 @@ const GameForm = withRouter (
             </div>
             <div>
               <label className='pure-input-1' for="description">Description</label>
-              <div className='rich-editor'>
+              <div className='rich-editor long-article'>
                 <Editor.richEditor value={this.state.description} />
               </div>
             </div>
             <div>
               <label className='pure-input-1 website' for="website">Website</label>
-              <input className='pure-input-1' value={this.state.website} />
+              <input className='pure-input-1' value={this.state.website} onChange={this.handleWebsite} />
             </div>
             <div>
               <label className='pure-input-1 platforms' for="website">Platforms</label>

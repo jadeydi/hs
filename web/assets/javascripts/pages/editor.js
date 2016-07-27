@@ -35,7 +35,7 @@ function handleDrop(e) {
         img.src = URL.createObjectURL(file);
 
         client('/attachments', 'POST', data).done(function(result) {
-          img.src = result.path;
+          img.src = result.path + '?imageView2/2/w/720/h/480';
           img.className = 'content-image'
           img.style.cssText = ''
         });

@@ -53,6 +53,17 @@
   }
 }
 
+.header {
+  padding: 2.5rem 0;
+  text-align: center;
+
+  a {
+    font-size: 2rem;
+    font-family: FZYANS_XIAN;
+    color: #363636;
+  }
+}
+
 .footer {
   text-align: center;
   width: 100%;
@@ -100,6 +111,14 @@
     }
   }
 }
+
+.long-article {
+  .content-image {
+    max-width: 45%;
+    padding: 0 2%;
+  }
+}
+
 
 @media (max-width: 34em) {
   .footer {

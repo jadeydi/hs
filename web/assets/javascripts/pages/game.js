@@ -11,6 +11,7 @@ const Game = withRouter (
     componentDidMount() {
       this.serverRequest = client(`/games/${this.props.params.id}`).done(function(result) {
         this.setState(result);
+        $('.game.show .body').html(result.description);
       }.bind(this));
     },
 
@@ -42,7 +43,7 @@ const Game = withRouter (
                 {platforms}
               </div>
             </div>
-            <div className='body'>
+            <div className='body long-article'>
               {this.state.description}
             </div>
           </div>

@@ -24,7 +24,29 @@
       display: block;
       font-size: 1.2rem;
       color: #585858;
+      margin-top: .75rem;
+    }
+
+    .info {
       padding: .6rem;
+    }
+
+    .platforms {
+      margin: .8rem 0;
+      span {
+        display: inline-block;
+        font-size: .75rem;
+        color: #999;
+        margin-right: .3rem;
+      }
+
+      a {
+        float: right;
+        color: #999;
+        font-weight: bold;
+        font-size: .7rem;
+        line-height: 16px;
+      }
     }
   }
 }

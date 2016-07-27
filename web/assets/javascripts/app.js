@@ -22,6 +22,9 @@ var Layout = React.createClass({
   render: function() {
     return (
       <div>
+        <div className="header">
+          <Link to='/' >- 哇咔撸 -</Link>
+        </div>
         <div className="container">
           { this.props.children }
         </div>
