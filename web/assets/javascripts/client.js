@@ -19,7 +19,10 @@ module.exports = function(url, method, data) {
       }
       , 401: function() {
         browserHistory.push('/account/sign_in');
-      },
+      }
+      , 500: function() {
+        browserHistory.push('/500');
+      }
     }
   });
 };

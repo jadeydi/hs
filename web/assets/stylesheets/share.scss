@@ -58,8 +58,8 @@
   text-align: center;
 
   a {
-    font-size: 2rem;
-    font-family: FZYANS_XIAN;
+    font-size: 1.6rem;
+    font-family: "Lucida Grande", Lucida Sans Unicode, Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
     color: #363636;
   }
 }
@@ -119,6 +119,17 @@
   }
 }
 
+.errors.error_messages {
+  font-size: .825rem;
+  padding: .5rem 0;
+  color: red;
+
+  ul {
+    li {
+      list-style: none;
+    }
+  }
+}
 
 @media (max-width: 34em) {
   .footer {

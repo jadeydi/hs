@@ -2,22 +2,31 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import Auth from '../auth';
 import client from '../client';
+import ResponseErrors from '../share/errors';
 
 const SignIn = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {identity: '', password: ''}
+      return {identity: '', password: '', errors: []}
     },
 
     render() {
+      var errorsHtml = "";
+      if (this.state.errors.length > 0) {
+        errorsHtml = <ResponseErrors errors={this.state.errors} />;
+      }
+
       return (
         <div className='account sign_in'>
+          {errorsHtml}
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
-              <input className='pure-input-1' type='text' name='identity' placeholder='用户名, 邮箱' value={this.state.identity} onChange={this.handleIdentity} />
+              <label for="email">用户名 / 邮箱</label>
+              <input className='pure-input-1' type='text' name='identity' value={this.state.identity} required onChange={this.handleIdentity} />
             </div>
             <div>
-              <input className='pure-input-1' type='password' name='password' placeholder='密码' value={this.state.password} onChange={this.handlePassword} />
+              <label for="password">密码</label>
+              <input className='pure-input-1' type='password' name='password' value={this.state.password} required onChange={this.handlePassword} />
             </div>
             <div>
               <input type="submit" value="登录" className="pure-button pure-button-primary pure-input-1"/>
@@ -38,6 +47,10 @@ const SignIn = withRouter (
           this.props.router.replace(location.state.nextPathname)
         } else {
           this.props.router.replace('/')
+        }
+      }.bind(this)).fail(function(jqXHR, textStatus) {
+        if (jqXHR.status == 401) {
+          this.setState({errors: ["username_or_password_invalid"]});
         }
       }.bind(this));
     },

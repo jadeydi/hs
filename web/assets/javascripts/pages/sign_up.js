@@ -2,28 +2,39 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import Auth from '../auth';
 import Client from '../client';
+import ResponseErrors from '../share/errors';
 
 const SignUp = withRouter (
   React.createClass({
     getInitialState: function() {
-      return {email: '', username: '', nickname: '', password: ''}
+      return {email: '', username: '', nickname: '', password: '', errors: []}
     },
 
     render() {
+      var errorsHtml = "";
+      if (this.state.errors.length > 0) {
+        errorsHtml = <ResponseErrors errors={this.state.errors} />;
+      }
+
       return (
         <div className='account sign_up'>
+          {errorsHtml}
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
-              <input className='pure-input-1' type='email' name='email' placeholder='邮箱' onChange={this.handleEmail} />
+              <label for="email">邮箱</label>
+              <input className='pure-input-1' type='email' name='email' required onChange={this.handleEmail} />
             </div>
             <div>
-              <input className='pure-input-1' type='text' name='username' min='5' placeholder='用户名' onChange={this.handleUsername} />
+              <label for="username">用户名(合法字符: a-zA-z_，最少3位)</label>
+              <input className='pure-input-1' type='text' name='username' pattern='[a-zA-Z0-9][a-zA-Z0-9_]{2,31}' required onChange={this.handleUsername} />
             </div>
             <div>
-              <input className='pure-input-1' type='text' name='nickname' min='5' placeholder='昵称' onChange={this.handleNickname} />
+              <label for="nickname">昵称</label>
+              <input className='pure-input-1' type='text' name='nickname' onChange={this.handleNickname} />
             </div>
             <div>
-              <input className='pure-input-1' type='password' name='password' min='6' placeholder='密码' onChange={this.handlePassword} />
+              <label for="password">密码(最少6位)</label>
+              <input className='pure-input-1' type='password' name='password' pattern='.{6,}' required onChange={this.handlePassword} />
             </div>
             <div>
               <input type="submit" value="注册" className="pure-button pure-input-1 pure-button-primary" />
@@ -46,6 +57,10 @@ const SignUp = withRouter (
           this.props.router.replace(location.state.nextPathname)
         } else {
           this.props.router.replace('/')
+        }
+      }.bind(this)).fail(function(jqXHR, textStatus) {
+        if (jqXHR.status == 422) {
+          this.setState({errors: jqXHR.responseJSON.errors});
         }
       }.bind(this));
     },

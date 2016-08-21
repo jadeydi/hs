@@ -3,13 +3,23 @@ module.exports = function(sequelize, DataTypes) {
   var user = sequelize.define('users', {
     username: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        isAlphanumeric: true
+        is: /^[a-z0-9][a-z0-9_]+$/i,
+        min: 3,
+        max: 32
       }
     },
-    nickname: DataTypes.STRING,
+    nickname: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        max: 108,
+      }
+    },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         isEmail: true
       }
@@ -26,7 +36,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       field: 'encrypted_password'
     },
-    salt: DataTypes.STRING,
+    salt: {
+      type: DataTypes.STRING,
+    },
   }, {
     underscored: true,
     classMethods: {

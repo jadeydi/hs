@@ -29,14 +29,14 @@ router.patch('/facts/:id', function(req, res, next) {
     var fact = yield models.facts.find({where: {id: req.params.id, userId: req.current_user.id}})
     if (fact == null) {
       res.status(404).json({});
-    } else {
-      var body = req.body;
-      fact.description = body.description
-      fact.tags = [].concat(body["tags[]"])
-      fact.status = body.status
-      var fact = yield fact.save()
-      res.json(factView.renderFact(fact));
+      return
     }
+    var body = req.body;
+    fact.description = body.description
+    fact.tags = [].concat(body["tags[]"])
+    fact.status = body.status
+    var fact = yield fact.save()
+    res.json(factView.renderFact(fact));
   }).catch(function(error) {
     next(error);
   });

@@ -1,0 +1,8 @@
+{
+  "username_exist": "用户名已存在",
+  "email_exist": "邮箱已存在",
+  "email": "邮箱不合法",
+  "username": "用户名不合法",
+  "password": "密码不合法",
+  "username_or_password_invalid": "用户名或密码不合法"
+}
