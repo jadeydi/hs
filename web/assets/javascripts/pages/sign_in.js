@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import Auth from '../auth';
 import client from '../client';
 import ResponseErrors from '../share/errors';
@@ -22,14 +22,17 @@ const SignIn = withRouter (
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
               <label for="email">用户名 / 邮箱</label>
-              <input className='pure-input-1' type='text' name='identity' value={this.state.identity} required onChange={this.handleIdentity} />
+              <input className='pure-input-1 field' type='text' name='identity' value={this.state.identity} required onChange={this.handleIdentity} />
             </div>
             <div>
               <label for="password">密码</label>
-              <input className='pure-input-1' type='password' name='password' value={this.state.password} required onChange={this.handlePassword} />
+              <input className='pure-input-1 field' type='password' name='password' value={this.state.password} required onChange={this.handlePassword} />
             </div>
-            <div>
+            <div className="register-button">
               <input type="submit" value="登录" className="pure-button pure-button-primary pure-input-1"/>
+            </div>
+            <div className="others">
+              <Link to="/account/sign_up"> 注册-> </Link>
             </div>
           </form>
         </div>

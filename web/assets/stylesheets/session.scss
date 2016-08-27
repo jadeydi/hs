@@ -2,7 +2,7 @@
   width: 18rem;
   max-width: 98%;
   margin: 0 auto;
-  margin-top: 3rem;
+  padding-top: 3rem;
 }
 
 .account {
@@ -12,5 +12,32 @@
 
   &.sign_up {
     @include position();
+  }
+
+  label {
+    margin-top: .8em;
+    color: #73727b;
+  }
+
+  input.field {
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #d8dfdd;
+    padding: 0.5em 0;
+  }
+
+  .register-button {
+    margin-top: .8em;
+    font-size: .825rem;
+
+    input {
+      background-color: #94c368;
+    }
+  }
+
+  .others {
+    margin-top: 1.5rem;
+    font-size: .825rem;
+    text-align: center;
   }
 }

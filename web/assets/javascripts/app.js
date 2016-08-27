@@ -39,6 +39,16 @@ var Layout = React.createClass({
   }
 });
 
+var RegisterLayout = React.createClass({
+  render: function() {
+    return (
+      <div className="container">
+        { this.props.children }
+      </div>
+    )
+  }
+});
+
 function requireAuth(nextState, replace) {
   if (!Auth.loggedIn()) {
     replace({
@@ -54,8 +64,6 @@ $(function() {
       <Route path="/" component={Layout}>
         <IndexRoute component={Home.home} />
         <Route path="/about" component={About.about} />
-        <Route path="account/sign_in" component={SignIn.signIn} />
-        <Route path="account/sign_up" component={SignUp.signUp} />
         <Route path="facts/new" onEnter={requireAuth} component={FactForm.factForm} />
         <Route path="facts/:id/edit" onEnter={requireAuth} component={FactForm.factForm} />
         <Route path="facts/:id" component={Fact.fact} />
@@ -64,6 +72,10 @@ $(function() {
         <Route path="games/:id" component={Game.game} />
         <Route path="cards" component={Card.card} />
         <Route path="cards/:id" component={Card.card} />
+      </Route>
+      <Route path="/account" component={RegisterLayout}>
+        <Route path="sign_in" component={SignIn.signIn} />
+        <Route path="sign_up" component={SignUp.signUp} />
       </Route>
       <Route path="/500" component={Share.serverError} />
       <Route path="*" component={Share.notFound} />

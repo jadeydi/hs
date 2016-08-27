@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import Auth from '../auth';
 import Client from '../client';
 import ResponseErrors from '../share/errors';
+import { Link } from 'react-router';
 
 const SignUp = withRouter (
   React.createClass({
@@ -22,22 +23,25 @@ const SignUp = withRouter (
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
               <label for="email">邮箱</label>
-              <input className='pure-input-1' type='email' name='email' required onChange={this.handleEmail} />
+              <input className='pure-input-1 field' type='email' name='email' required onChange={this.handleEmail} />
             </div>
             <div>
-              <label for="username">用户名(合法字符: a-zA-z_，最少3位)</label>
-              <input className='pure-input-1' type='text' name='username' pattern='[a-zA-Z0-9][a-zA-Z0-9_]{2,31}' required onChange={this.handleUsername} />
+              <label for="username">用户名(合法字符: a-zA-z0-9_，最少3位)</label>
+              <input className='pure-input-1 field' type='text' name='username' pattern='[a-zA-Z0-9][a-zA-Z0-9_]{2,31}' required onChange={this.handleUsername} />
             </div>
             <div>
               <label for="nickname">昵称</label>
-              <input className='pure-input-1' type='text' name='nickname' onChange={this.handleNickname} />
+              <input className='pure-input-1 field' type='text' name='nickname' onChange={this.handleNickname} />
             </div>
             <div>
               <label for="password">密码(最少6位)</label>
-              <input className='pure-input-1' type='password' name='password' pattern='.{6,}' required onChange={this.handlePassword} />
+              <input className='pure-input-1 field' type='password' name='password' pattern='.{6,}' required onChange={this.handlePassword} />
             </div>
-            <div>
+            <div className="register-button">
               <input type="submit" value="注册" className="pure-button pure-input-1 pure-button-primary" />
+            </div>
+            <div className="others">
+              <Link to="/account/sign_in"> 登录-> </Link>
             </div>
           </form>
         </div>
