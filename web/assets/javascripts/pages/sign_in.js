@@ -15,7 +15,7 @@ const SignIn = withRouter (
       var {location} = this.props;
       var identity = this.state.identity.trim();
       var password = this.state.password.trim();
-      this.serverRequest = http('/session', 'POST', {identity: identity, password: password}).done(function(result) {
+      this.serverRequest = http('/sessions', 'POST', {identity: identity, password: password}).done(function(result) {
         Auth.login(result);
         if (location.state && location.state.nextPathname) {
           this.props.router.replace(location.state.nextPathname)

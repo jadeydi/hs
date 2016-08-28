@@ -6,7 +6,7 @@ var userView = require('../views/user');
 var randomstring = require("randomstring");
 var passwordHash = require('password-hash');
 
-router.post('/session', function(req, res, next) {
+router.post('/sessions', function(req, res, next) {
   var body= req.body;
   models.users.findOne({where: {$or: [{username: body.identity}, {email: body.identity}]}}).then(function(user) {
     if (user == null) {
