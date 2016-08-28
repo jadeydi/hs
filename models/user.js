@@ -43,8 +43,6 @@ module.exports = function(sequelize, DataTypes) {
     underscored: true,
     classMethods: {
       associate: function(models) {
-        user.hasMany(models.facts);
-        user.hasMany(models.games);
         user.hasMany(models.attachments);
       }
     },
