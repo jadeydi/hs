@@ -1,13 +1,40 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
 import Auth from '../auth';
-import client from '../client';
+import http from '../network/httpclient';
 import ResponseErrors from '../share/errors';
 
 const SignIn = withRouter (
   React.createClass({
     getInitialState: function() {
       return {identity: '', password: '', errors: []}
+    },
+
+    handleSubmit: function(e) {
+      e.preventDefault();
+      var {location} = this.props;
+      var identity = this.state.identity.trim();
+      var password = this.state.password.trim();
+      this.serverRequest = http('/session', 'POST', {identity: identity, password: password}).done(function(result) {
+        Auth.login(result);
+        if (location.state && location.state.nextPathname) {
+          this.props.router.replace(location.state.nextPathname)
+        } else {
+          this.props.router.replace('/')
+        }
+      }.bind(this)).fail(function(jqXHR, textStatus) {
+        if (jqXHR.status == 401) {
+          this.setState({errors: ["username_or_password_invalid"]});
+        }
+      }.bind(this));
+    },
+
+    handleIdentity: function(e) {
+      this.setState({identity: e.target.value});
+    },
+
+    handlePassword: function(e) {
+      this.setState({password: e.target.value});
     },
 
     render() {
@@ -37,33 +64,6 @@ const SignIn = withRouter (
           </form>
         </div>
       )
-    },
-
-    handleSubmit: function(e) {
-      e.preventDefault();
-      var {location} = this.props;
-      var identity = this.state.identity.trim();
-      var password = this.state.password.trim();
-      this.serverRequest = client('/session', 'POST', {identity: identity, password: password}).done(function(result) {
-        Auth.login(result);
-        if (location.state && location.state.nextPathname) {
-          this.props.router.replace(location.state.nextPathname)
-        } else {
-          this.props.router.replace('/')
-        }
-      }.bind(this)).fail(function(jqXHR, textStatus) {
-        if (jqXHR.status == 401) {
-          this.setState({errors: ["username_or_password_invalid"]});
-        }
-      }.bind(this));
-    },
-
-    handleIdentity: function(e) {
-      this.setState({identity: e.target.value});
-    },
-
-    handlePassword: function(e) {
-      this.setState({password: e.target.value});
     },
   })
 );

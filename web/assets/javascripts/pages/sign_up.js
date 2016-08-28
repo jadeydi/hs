@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Auth from '../auth';
-import Client from '../client';
+import Client from '../network/httpclient';
 import ResponseErrors from '../share/errors';
 import { Link } from 'react-router';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router';
-import client from '../client';
+import client from '../network/httpclient';
 
 const Game = withRouter (
   React.createClass({

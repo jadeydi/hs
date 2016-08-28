@@ -42,8 +42,15 @@ var Layout = React.createClass({
 var RegisterLayout = React.createClass({
   render: function() {
     return (
-      <div className="container">
-        { this.props.children }
+      <div>
+        <div className="session-header">
+          <Link to="/">
+            <img src="/images/clock.png" className="logo" />
+          </Link>
+        </div>
+        <div className="container">
+          { this.props.children }
+        </div>
       </div>
     )
   }

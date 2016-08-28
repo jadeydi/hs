@@ -1,5 +1,5 @@
 import React from 'react';
-import client from '../client';
+import client from '../network/httpclient';
 import { withRouter } from 'react-router';
 import Editor from './editor'
 import {ContentState, convertFromHTML} from 'draft-js';

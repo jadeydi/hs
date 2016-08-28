@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router';
-import client from '../client';
+import client from '../network/httpclient';
 
 const Home = withRouter (
   React.createClass({

@@ -2,7 +2,7 @@ import React from 'react';
 import MediumEditor from 'medium-editor';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/beagle.css';
-import client from '../client';
+import client from '../network/httpclient';
 
 function handleDrop(e) {
   //kill any default behavior

@@ -1,5 +1,5 @@
 import React from 'react';
-import client from '../client';
+import client from '../network/httpclient';
 import variables from '!json!../../../../config/variables';
 import qiniu from '!json!../../../../config/qiniu';
 import { Link, withRouter } from 'react-router';

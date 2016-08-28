@@ -5,6 +5,14 @@
   padding-top: 3rem;
 }
 
+.session-header {
+  padding-top: 3rem;
+  text-align: center;
+  .logo {
+    width: 50px;
+  }
+}
+
 .account {
   &.sign_in {
     @include position();
