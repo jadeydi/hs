@@ -10,6 +10,7 @@ var app = express();
 var account = require('./api/routes/account');
 var attachments = require('./api/routes/attachments');
 var home = require('./api/routes/home');
+
 // middleware
 var auth = require('./middleware/authenticate');
 
@@ -18,7 +19,7 @@ app.set('views', path.join(__dirname, 'web/views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'web', 'public', 'images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({limit: '5mb', extended: false }));
