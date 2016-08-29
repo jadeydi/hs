@@ -10,8 +10,8 @@ import SignIn from './pages/sign_in';
 import SignUp from './pages/sign_up';
 import Home from './pages/home';
 import About from './pages/about';
-import Auth from './auth';
-import Share from './share';
+import Authority from './authority';
+import Share from './share/share';
 
 var Layout = React.createClass({
   render: function() {

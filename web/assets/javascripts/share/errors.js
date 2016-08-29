@@ -1,5 +1,5 @@
 import React from 'react';
-import UserTrans from '../../../../config/localizion/users.json';
+import UserTrans from '../../../../config/locales/users.json';
 
 const ResponseErrors = React.createClass({
   render() {

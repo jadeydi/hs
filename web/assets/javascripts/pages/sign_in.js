@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
-import Auth from '../auth';
+import Authority from '../authority';
 import http from '../network/httpclient';
 import ResponseErrors from '../share/errors';
 
@@ -16,7 +16,7 @@ const SignIn = withRouter (
       var identity = this.state.identity.trim();
       var password = this.state.password.trim();
       this.serverRequest = http('/sessions', 'POST', {identity: identity, password: password}).done(function(result) {
-        Auth.login(result);
+        Authority.login(result);
         if (location.state && location.state.nextPathname) {
           this.props.router.replace(location.state.nextPathname)
         } else {
