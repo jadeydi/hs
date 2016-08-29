@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // routes
-var account = require('./api/routes/account');
+var accounts = require('./api/routes/accounts');
 var attachments = require('./api/routes/attachments');
-var home = require('./api/routes/home');
+var index = require('./api/routes/index');
 
 // middleware
 var auth = require('./middleware/authenticate');
@@ -31,8 +31,8 @@ app.use(auth.handleRouter);
 app.use(auth.authenticate);
 
 // api routes
-app.use('/api', home);
-app.use('/api', account);
+app.use('/api', index);
+app.use('/api', accounts);
 app.use('/api', attachments);
 
 // catch 404 and forward to error handler
