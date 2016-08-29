@@ -1,9 +1,8 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-import Authority from '../authority';
+import { Link, withRouter } from 'react-router';
 import Client from '../network/httpclient';
+import Authority from '../share/authority';
 import ResponseErrors from '../share/errors';
-import { Link } from 'react-router';
 
 const SignUp = withRouter (
   React.createClass({

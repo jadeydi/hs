@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
-import Authority from '../authority';
 import http from '../network/httpclient';
+import Authority from '../share/authority';
 import ResponseErrors from '../share/errors';
 
 const SignIn = withRouter (

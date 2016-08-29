@@ -6,12 +6,12 @@ import 'font-awesome/css/font-awesome.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
-import SignIn from './pages/sign_in';
-import SignUp from './pages/sign_up';
+import SignIn from './users/sign_in';
+import SignUp from './users/sign_up';
 import Home from './pages/home';
 import About from './pages/about';
-import Authority from './authority';
-import Share from './share/share';
+import Authority from './share/authority';
+import Status from './share/status';
 
 var Layout = React.createClass({
   render: function() {
@@ -71,8 +71,8 @@ $(function() {
         <Route path="sign_in" component={SignIn.signIn} />
         <Route path="sign_up" component={SignUp.signUp} />
       </Route>
-      <Route path="/500" component={Share.serverError} />
-      <Route path="*" component={Share.notFound} />
+      <Route path="/500" component={Status.serverError} />
+      <Route path="*" component={Status.notFound} />
     </Router>,
     document.getElementById('js-container')
   );
