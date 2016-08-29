@@ -2,25 +2,14 @@ var models = require('../models');
 
 var whiteList = [
   ["GET", "^/api/$"],
-  ["POST", "^/api/session$"],
+  ["POST", "^/api/sessions$"],
   ["POST", "^/api/account$"],
 ]
 
-var adminList = [
-]
-
-function valid(req) {
+function validRoutes(req) {
   return whiteList.some(function(item) {
     return item[0] == req.method && (new RegExp(item[1])).test(req.path)
   });
-}
-
-function validAdmin(req) {
-  var match = adminList.some(function(item) {
-    return item[0] == req.method && (new RegExp(item[1])).test(req.path)
-  });
-  var user = req.current_user
-  return (user != null && user.isAdmin()) || !match
 }
 
 module.exports = {
@@ -51,7 +40,7 @@ module.exports = {
   },
 
   authenticate: function(req, res, next) {
-    if (validAdmin(req) || valid(req)) {
+    if (validRoutes(req)) {
       next();
     } else {
       res.status(401).json({})
