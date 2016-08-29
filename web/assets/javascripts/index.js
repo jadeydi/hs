@@ -1,7 +1,7 @@
 import 'purecss/build/pure-min.css';
 import 'medium-editor/src/sass/medium-editor.scss';
 import 'purecss/build/grids-responsive-min.css';
-import '../stylesheets/app.scss';
+import '../stylesheets/index.scss';
 import 'font-awesome/css/font-awesome.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
