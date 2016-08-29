@@ -11,7 +11,9 @@ const SignUp = withRouter (
     },
 
     componentWillUnmount: function(e) {
-      this.serverRequest.abort();
+      if (this.serverRequest != undefined) {
+        this.serverRequest.abort();
+      }
     },
 
     handleSubmit: function(e) {
