@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router';
-import Client from '../network/httpclient';
+import http from '../network/httpclient';
 import Authority from '../share/authority';
 import ResponseErrors from '../share/errors';
 
@@ -8,6 +8,47 @@ const SignUp = withRouter (
   React.createClass({
     getInitialState: function() {
       return {email: '', username: '', nickname: '', password: '', errors: []}
+    },
+
+    componentWillUnmount: function(e) {
+      this.serverRequest.abort();
+    },
+
+    handleSubmit: function(e) {
+      e.preventDefault();
+      var {location} = this.props;
+      var username = this.state.username.trim();
+      var nickname = this.state.nickname.trim();
+      var email = this.state.email.trim();
+      var password = this.state.password.trim();
+    this.serverRequest = http.post('/account', {data: {username: username, nickname: nickname, email: email, password: password}}).done(function(result) {
+        Authority.login(result);
+        if (location.state && location.state.nextPathname) {
+          this.props.router.replace(location.state.nextPathname)
+        } else {
+          this.props.router.replace('/')
+        }
+      }.bind(this)).fail(function(jqXHR, textStatus) {
+        if (jqXHR.status == 422) {
+          this.setState({errors: jqXHR.responseJSON.errors});
+        }
+      }.bind(this));
+    },
+
+    handleEmail: function(e) {
+      this.setState({email: e.target.value});
+    },
+
+    handleUsername: function(e) {
+      this.setState({username: e.target.value});
+    },
+
+    handleNickname: function(e) {
+      this.setState({nickname: e.target.value});
+    },
+
+    handlePassword: function(e) {
+      this.setState({password: e.target.value});
     },
 
     render() {
@@ -46,43 +87,6 @@ const SignUp = withRouter (
         </div>
       )
     },
-
-    handleSubmit: function(e) {
-      e.preventDefault();
-      var {location} = this.props;
-      var username = this.state.username.trim();
-      var nickname = this.state.nickname.trim();
-      var email = this.state.email.trim();
-      var password = this.state.password.trim();
-    this.serverRequest = Client('/account', 'POST', {username: username, nickname: nickname, email: email, password: password}).done(function(result) {
-        Authority.login(result);
-        if (location.state && location.state.nextPathname) {
-          this.props.router.replace(location.state.nextPathname)
-        } else {
-          this.props.router.replace('/')
-        }
-      }.bind(this)).fail(function(jqXHR, textStatus) {
-        if (jqXHR.status == 422) {
-          this.setState({errors: jqXHR.responseJSON.errors});
-        }
-      }.bind(this));
-    },
-
-    handleEmail: function(e) {
-      this.setState({email: e.target.value});
-    },
-
-    handleUsername: function(e) {
-      this.setState({username: e.target.value});
-    },
-
-    handleNickname: function(e) {
-      this.setState({nickname: e.target.value});
-    },
-
-    handlePassword: function(e) {
-      this.setState({password: e.target.value});
-    }
   })
 );
 

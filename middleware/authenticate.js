@@ -39,7 +39,7 @@ module.exports = {
   },
 
   handleRouter: function(req, res, next) {
-    if (req.headers.accept == 'application/vnd.cksity.com+json') {
+    if (req.headers.accept == 'application/vnd.cksity.com+json; version=1') {
       next();
     } else {
       if (req.method == "GET" && validAdmin(req)) {

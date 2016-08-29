@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, withRouter} from 'react-router';
-import client from '../network/httpclient';
+import http from '../network/httpclient';
 
 const Home = withRouter (
   React.createClass({
@@ -9,7 +9,7 @@ const Home = withRouter (
     },
 
     componentDidMount() {
-      this.serverRequest = client('/').done(function(result) {
+      this.serverRequest = http.get('/').done(function(result) {
         this.setState(result);
       }.bind(this));
     },
