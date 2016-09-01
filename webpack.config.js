@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 
+var production  = process.env.NODE_ENV === 'production' ? true : false;
 module.exports = {
   entry: './web/assets/javascripts/index.js',
   output: {
@@ -59,5 +60,6 @@ module.exports = {
         comments: false,
       },
     }),
-  ]
+  ],
+  devtool: production ? '' : 'cheap-source-map',
 }

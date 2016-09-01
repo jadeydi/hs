@@ -31,7 +31,7 @@ module.exports = {
     if (req.headers.accept == 'application/vnd.cksity.com+json; version=1') {
       next();
     } else {
-      if (req.method == "GET" && validAdmin(req)) {
+      if (req.method == "GET") {
         res.render('index');
       } else {
         res.redirect("/")
@@ -40,7 +40,7 @@ module.exports = {
   },
 
   authenticate: function(req, res, next) {
-    if (validRoutes(req)) {
+    if (validRoutes(req) || req.current_user != null) {
       next();
     } else {
       res.status(401).json({})

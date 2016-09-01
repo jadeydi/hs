@@ -4,5 +4,6 @@
   "email": "邮箱不合法",
   "username": "用户名不合法",
   "password": "密码不合法",
+  "password_length_too_short": "密码长度不够",
   "username_or_password_invalid": "用户名或密码不合法"
 }

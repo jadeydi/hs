@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router';
 import http from '../network/httpclient';
 import Authority from '../share/authority';
 import ResponseErrors from '../share/errors';
+import './users.scss';
 
 const SignIn = withRouter (
   React.createClass({
@@ -35,12 +36,13 @@ const SignIn = withRouter (
       }.bind(this));
     },
 
-    handleIdentity: function(e) {
-      this.setState({identity: e.target.value});
-    },
-
-    handlePassword: function(e) {
-      this.setState({password: e.target.value});
+    handleInputChange(field) {
+      let that = this;
+      return (e)=> {
+        let newState = that.state;
+        newState[field] = e.target.value;
+        that.setState(newState);
+      }
     },
 
     render() {
@@ -55,11 +57,16 @@ const SignIn = withRouter (
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
               <label for="email">用户名 / 邮箱</label>
-              <input className='pure-input-1 field' type='text' name='identity' value={this.state.identity} required onChange={this.handleIdentity} />
+              <input className='pure-input-1 field' type='text'
+                name='identity' value={this.state.identity} required
+                onChange={this.handleInputChange.bind(this)('identity')} />
             </div>
             <div>
               <label for="password">密码</label>
-              <input className='pure-input-1 field' type='password' name='password' value={this.state.password} required onChange={this.handlePassword} />
+              <input className='pure-input-1 field'
+                type='password' name='password'
+                value={this.state.password} required
+                onChange={this.handleInputChange.bind(this)('password')} />
             </div>
             <div className="register-button">
               <input type="submit" value="登录" className="pure-button pure-button-primary pure-input-1"/>

@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router';
 import http from '../network/httpclient';
 import Authority from '../share/authority';
 import ResponseErrors from '../share/errors';
+import './users.scss';
 
 const SignUp = withRouter (
   React.createClass({
@@ -23,7 +24,7 @@ const SignUp = withRouter (
       var nickname = this.state.nickname.trim();
       var email = this.state.email.trim();
       var password = this.state.password.trim();
-    this.serverRequest = http.post('/account', {data: {username: username, nickname: nickname, email: email, password: password}}).done(function(result) {
+      this.serverRequest = http.post('/account', {data: {username: username, nickname: nickname, email: email, password: password}}).done(function(result) {
         Authority.login(result);
         if (location.state && location.state.nextPathname) {
           this.props.router.replace(location.state.nextPathname)
@@ -37,20 +38,13 @@ const SignUp = withRouter (
       }.bind(this));
     },
 
-    handleEmail: function(e) {
-      this.setState({email: e.target.value});
-    },
-
-    handleUsername: function(e) {
-      this.setState({username: e.target.value});
-    },
-
-    handleNickname: function(e) {
-      this.setState({nickname: e.target.value});
-    },
-
-    handlePassword: function(e) {
-      this.setState({password: e.target.value});
+    handleInputChange(field) {
+      let that = this;
+      return (e)=> {
+        let newState = that.state;
+        newState[field] = e.target.value;
+        that.setState(newState);
+      }
     },
 
     render() {
@@ -65,19 +59,19 @@ const SignUp = withRouter (
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>
               <label for="email">邮箱</label>
-              <input className='pure-input-1 field' type='email' name='email' required onChange={this.handleEmail} />
+              <input className='pure-input-1 field' type='email' name='email' required onChange={this.handleInputChange.bind(this)('email')} />
             </div>
             <div>
               <label for="username">用户名(合法字符: a-zA-z0-9_，最少3位)</label>
-              <input className='pure-input-1 field' type='text' name='username' pattern='[a-zA-Z0-9][a-zA-Z0-9_]{2,31}' required onChange={this.handleUsername} />
+              <input className='pure-input-1 field' type='text' name='username' pattern='[a-zA-Z0-9][a-zA-Z0-9_]{2,31}' required onChange={this.handleInputChange.bind(this)('username')} />
             </div>
             <div>
               <label for="nickname">昵称</label>
-              <input className='pure-input-1 field' type='text' name='nickname' onChange={this.handleNickname} />
+              <input className='pure-input-1 field' type='text' name='nickname' onChange={this.handleInputChange.bind(this)('nickname')} />
             </div>
             <div>
               <label for="password">密码(最少6位)</label>
-              <input className='pure-input-1 field' type='password' name='password' pattern='.{6,}' required onChange={this.handlePassword} />
+              <input className='pure-input-1 field' type='password' name='password' pattern='.{6,}' required onChange={this.handleInputChange.bind(this)('password')} />
             </div>
             <div className="register-button">
               <input type="submit" value="注册" className="pure-button pure-input-1 pure-button-primary" />

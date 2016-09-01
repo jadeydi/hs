@@ -16,6 +16,14 @@ const _post = function(url, options) {
   return _fetch(options)
 }
 
+const _put = function(url, options) {
+  options = options || {}
+  options.method = "PUT";
+  options.url = "/api" + url;
+
+  return _fetch(options)
+}
+
 const _delete = function(url, options) {
   options = options || {}
   options.method = "DELETE";
@@ -47,4 +55,4 @@ const _fetch = function(options) {
   return $.ajax(settings);
 }
 
-export default {get: _get, post: _post, delete: _delete}
+export default {get: _get, post: _post, put: _put, delete: _delete}

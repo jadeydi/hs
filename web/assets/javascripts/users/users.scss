@@ -14,11 +14,10 @@
 }
 
 .account {
-  &.sign_in {
-    @include position();
-  }
 
-  &.sign_up {
+  &.sign_in,
+  &.sign_up,
+  &.me {
     @include position();
   }
 

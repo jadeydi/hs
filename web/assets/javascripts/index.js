@@ -6,6 +6,7 @@ import 'font-awesome/css/font-awesome.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
+import Account from './users/account';
 import SignIn from './users/sign_in';
 import SignUp from './users/sign_up';
 import Home from './pages/home';
@@ -68,6 +69,7 @@ $(function() {
         <Route path="/about" component={About.about} />
       </Route>
       <Route path="/account" component={RegisterLayout}>
+        <IndexRoute component={Account.account} />
         <Route path="sign_in" component={SignIn.signIn} />
         <Route path="sign_up" component={SignUp.signUp} />
       </Route>

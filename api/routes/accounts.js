@@ -24,6 +24,7 @@ router.post('/sessions', function(req, res, next) {
   });
 });
 
+// Todo authenticationToken should uniq
 router.post('/account', function(req, res) {
   var body = req.body;
   co(function* () {
@@ -35,6 +36,10 @@ router.post('/account', function(req, res) {
     user = yield models.users.findOne({where: {email: body.email.toLocaleLowerCase()}})
     if (user != null) {
       res.status(422).json({errors: ['email_exist']});
+      return
+    }
+    if (body.password.length < 6) {
+      res.status(422).json({errors: ['password_length_too_short']});
       return
     }
 
@@ -56,13 +61,30 @@ router.post('/account', function(req, res) {
   });
 });
 
-router.get('/account', function(req, res) {
-  user = req.current_user
-  if (user != undefined) {
-    res.json(userView.renderUser(user));
-  } else {
-    res.status(401).json({});
+router.put('/account', function(req, res) {
+  var user = req.current_user;
+  var body = req.body;
+
+  user.username = body.username
+  user.nickname = body.nickname
+
+  if (body.password != '' && body.password.length > 5) {
+    if (passwordHash.verify(body.old_password + user.salt, user.encryptedPassword)) {
+      var token = randomstring.generate({ charset: 'hex' });
+      user.authenticationToken = token
+      user.encryptedPassword = passwordHash.generate(body.password + user.salt)
+    }
   }
+
+  user.save().then(function(user) {
+    res.cookie(cookieName, user.authenticationToken, { expires:  expiration }).json(userView.renderUser(user));
+  }).catch(function(error) {
+    next(error)
+  })
+});
+
+router.get('/account', function(req, res) {
+  res.json(userView.renderUser(req.current_user));
 });
 
 module.exports = router;
