@@ -11,13 +11,13 @@ const SignUp = withRouter (
       return {email: '', username: '', nickname: '', password: '', errors: []}
     },
 
-    componentWillUnmount: function(e) {
+    componentWillUnmount(e) {
       if (this.serverRequest != undefined) {
         this.serverRequest.abort();
       }
     },
 
-    handleSubmit: function(e) {
+    handleSubmit(e) {
       e.preventDefault();
       var {location} = this.props;
       var username = this.state.username.trim();
