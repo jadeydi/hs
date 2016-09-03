@@ -24,6 +24,10 @@ module.exports = function(sequelize, DataTypes) {
         isEmail: true
       }
     },
+    avatarUrl: {
+      type: DataTypes.STRING,
+      field: 'avatar_url'
+    },
     role: {
       type: DataTypes.STRING
     },

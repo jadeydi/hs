@@ -8,7 +8,7 @@ import './users.scss';
 const Account = withRouter (
   React.createClass({
     getInitialState() {
-      return {email: '', username: '', nickname: '', old_password: '', password: '', errors: []}
+      return {email: '', username: '', nickname: '', old_password: '', password: '', errors: [], success: false}
     },
 
     componentDidMount(e) {
@@ -40,11 +40,11 @@ const Account = withRouter (
       var oldPassword = this.state.old_password.trim();
       var password = this.state.password.trim();
       this.serverRequest = http.put('/account', {data: {username: username, nickname: nickname, old_password: oldPassword, password: password}}).done(function(result) {
-        Object.assign(result, {password: "", old_password: ""});
+        Object.assign(result, {password: "", old_password: "", success: true});
         this.setState(result);
       }.bind(this)).fail(function(jqXHR, textStatus) {
         if (jqXHR.status == 422) {
-          this.setState({errors: jqXHR.responseJSON.errors});
+          this.setState({errors: jqXHR.responseJSON.errors, success: false});
         }
       }.bind(this));
     },
@@ -55,8 +55,14 @@ const Account = withRouter (
         errorsHtml = <ResponseErrors errors={this.state.errors} />;
       }
 
+      var successHtml = "";
+      if (this.state.success) {
+        successHtml = <div className='update success'> 更新成功 </div>;
+      }
+
       return (
         <div className='account me'>
+          {successHtml}
           {errorsHtml}
           <form onSubmit={this.handleSubmit} className='pure-form pure-form-stacked'>
             <div>

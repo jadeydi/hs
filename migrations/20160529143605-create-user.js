@@ -25,6 +25,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      avatar_url: {
+        type: Sequelize.STRING,
+        defaultValue: ''
+      },
       bio: {
         type: Sequelize.TEXT
       },

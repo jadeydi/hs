@@ -67,9 +67,9 @@ $(function() {
       <Route path="/" component={Layout}>
         <IndexRoute component={Home.home} />
         <Route path="/about" component={About.about} />
+        <Route path="/account" component={Account.account} />
       </Route>
       <Route path="/account" component={RegisterLayout}>
-        <IndexRoute component={Account.account} />
         <Route path="sign_in" component={SignIn.signIn} />
         <Route path="sign_up" component={SignUp.signUp} />
       </Route>
